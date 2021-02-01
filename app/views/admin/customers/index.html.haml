@@ -1,0 +1,57 @@
+- content_for :content_header do
+  .d-sm-flex.justify-content-between.mb-4
+    .col-sm-6
+      %h1.h3.mb-0.text-gray-800 Khách Hàng
+- content_for :content_body do
+  .row
+    .col
+      .card
+        .card-body
+          %form.mr-auto.my-2.my-md-0.mw-100.navbar-search
+            .input-group
+              %input.form-control.bg-light.border-0.small{"aria-describedby" => "basic-addon2", "aria-label" => "Search", :placeholder => "Search for...", :type => "text"}/
+              .input-group-append
+                %button.btn.btn-primary{:type => "button"}
+                  %i.fas.fa-search.fa-sm
+          -#= form_with url: admin_customers_path, method: :get, local: true, class: 'input-group search-group' do |f|
+          -#  = f.text_field :query, value: params[:query], id: 'customer-search', class: 'form-control typeahead', type: 'search'
+          -#  %button{type: 'submit'}
+          -#    %i.fa.fa-search
+  .card
+    .card-body
+      .table-responsive.p-0
+        %table.table.text-nowrap.table-hover
+          %thead
+            %tr
+              %th Tên khách hàng
+              %th Số điện thoại
+              %th Số điện thoại phụ
+              %th Giới tính
+              %th Email
+              %th CMND
+              %th Ngày sinh
+              %th Xác thực
+              %th
+          %tbody
+            - @customers.each do |customer|
+              %tr
+                %td.align-middle= customer.name
+                %td.align-middle= customer.phone_number
+                %td.align-middle= customer.second_phone_number
+                %td.align-middle= customer.get_gender
+                %td.align-middle= customer.email
+                %td.align-middle= customer.identity_card
+                %td.align-middle= customer.get_dob
+                %td.align-middle= customer.get_state
+                %td.align-middle.text-right
+                  %a.btn.btn-outline-primary.btn-edit{href: edit_admin_customer_path(customer.id)}
+                    %i.fas.fa-pencil-alt
+                  -#- if policy(customer).destroy?
+                  %a.btn.btn-outline-primary{href: admin_customer_path(customer.id), data: {method: 'delete', confirm: 'Bạn chắc chắn muốn xóa bản ghi này?'}}
+                    %i.fas.fa-trash
+
+- content_for :content_footer do
+  %footer.main-footer.main-footer-fixed
+    .row
+      .col-12
+        = link_to 'Tạo mới', new_admin_customer_path, class: 'btn btn-primary'

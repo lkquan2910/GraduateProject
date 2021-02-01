@@ -1,0 +1,7 @@
+- content_for :content_body do
+  %h3.text-gray-800 Chỉnh sửa khách hàng
+  %a.header-back{href: admin_customers_path}
+    %i.fas.fa-angle-left
+      Trở lại danh sách
+  = render 'form'
+

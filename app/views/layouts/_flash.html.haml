@@ -1,0 +1,20 @@
+.flash
+  - flash.each do |name, msg|
+    - if name == 'notice'
+      %div.flash-notice.alert
+        .row
+          .col{style: 'padding-bottom: 8px'}
+            %i.fas.fa-check-circle.icon-successful
+            %span.text-successful Successfully!
+            %button.close{"aria-hidden" => "true", "data-dismiss" => "alert", :type => "button"}
+              %i.fas.fa-times{style: 'font-size: 22px'}
+        %span= msg
+    - if %w(error alert).include? name
+      %div.tms-flash-alert.alert
+        .row
+          .col{style: 'padding-bottom: 8px'}
+            %i.fas.fa-times-circle.icon-error
+            %span.text-error Error!
+            %button.close{"aria-hidden" => "true", "data-dismiss" => "alert", :type => "button"}
+              %i.fas.fa-times{style: 'font-size: 20px'}
+        %div= msg.html_safe

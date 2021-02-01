@@ -1,0 +1,122 @@
+.row
+  .col
+    = form_with model: [:admin, @customer], local: true, class: 'form-customer' do |f|
+      - unless @is_disabled
+        .row
+          .col
+            .card.mb-3
+              .card-body
+                .float-right
+                  %button.btn.btn-danger.button-save= @customer.new_record? ? 'Lưu' : 'Lưu thay đổi'
+      .card
+        .card-body
+          .row
+            .col
+              .card.shadow.mb-4
+                %a.d-block.card-header.py-3{"aria-controls" => "collapseCardExample", "aria-expanded" => "true", "data-toggle" => "collapse", :href => "#collapseCardExample", :role => "button"}
+                  %h5.m-0.font-weight-bold.text-primary Thông tin khách hàng
+                #collapseCardExample.collapse.show
+                  .card-body
+                    .gp-field-group
+                      .gp-field-group-body
+                        .row
+                          .col
+                            .form-group
+                              = f.label :name, 'Tên khách hàng'
+                              = f.text_field :name, class: 'form-control', disabled: @is_disabled
+                              - f.object.errors.messages[:name].each do |name_error|
+                                %span.invalid-feedback.custom-validation= name_error
+                            .form-group
+                              = f.label :phone_number, 'Số điện thoại'
+                              = f.text_field :phone_number, class: 'form-control', disabled: @is_disabled
+                              - f.object.errors.messages[:phone_number].each do |phone_number_error|
+                                %span.invalid-feedback.custom-validation= phone_number_error
+                            .form-group
+                              = f.label :second_phone_number, 'Số điện thoại phụ'
+                              = f.text_field :second_phone_number, class: 'form-control', disabled: @is_disabled
+                            .form-group
+                              = f.label :gender, 'Giới tính'
+                              = f.select :gender, options_for_select(Constant::CUSTOMER_GENDER.invert, @customer.gender), {include_blank: true}, {class: 'form-control gp-select2', disabled: @is_disabled}
+                            .form-group
+                              = f.label :email, 'Email'
+                              = f.text_field :email, class: 'form-control', disabled: @is_disabled
+                              - f.object.errors.messages[:email].each do |email_error|
+                                %span.invalid-feedback.custom-validation= email_error
+                            .form-group
+                              = f.label :identity_card, 'CMND'
+                              = f.text_field :identity_card, class: 'form-control', disabled: @is_disabled
+                              - f.object.errors.messages[:identity_card].each do |identity_card_error|
+                                %span.invalid-feedback.custom-validation= identity_card_error
+                            .form-group
+                              = f.label :city_id, 'Tỉnh/Thành phố'
+                              = f.select :city_id, options_for_select(@cities, f.object.city_id), {include_blank: true}, {class: 'form-control gp-select2', disabled: @is_disabled}
+                            .form-group
+                              = f.label :address, 'Địa chỉ'
+                              = f.text_area :address, class: 'form-control', disabled: @is_disabled
+                            .form-group
+                              = f.label :dob, 'Ngày sinh'
+                              .input-group
+                                .input-group-prepend
+                                  %span.input-group-text
+                                    %i.far.fa-calendar-alt
+                                = f.text_field :dob, class: 'form-control float-right datepicker', value: f.object.get_dob, disabled: @is_disabled
+                            .form-group
+                              = f.label :data_source, 'Nguồn dữ liệu'
+                              = f.select :data_source, options_for_select(Constant::CUSTOMER_DATA_SOURCE.invert, @customer.data_source), {include_blank: true}, {class: 'form-control gp-select2', disabled: @is_disabled}
+                            .form-group
+                              = f.label :customer_characteristic, 'Đặc tính khách hàng'
+                              = f.select :customer_characteristic, options_for_select(Constant::CUSTOMER_CUSTOMER_CHARACTERISTIC.invert, @customer.customer_characteristic), {include_hidden: false}, {class: 'form-control gp-select2', multiple: true, disabled: @is_disabled}
+                            .form-group
+                              = f.label :state, 'Trạng thái xác thực'
+                              = f.text_field :state, class: 'form-control', disabled: true, value: f.object.get_state
+            .col
+              .card.shadow.mb-4
+                %a.d-block.card-header.py-3{"aria-controls" => "collapseCardExample1", "aria-expanded" => "true", "data-toggle" => "collapse", :href => "#collapseCardExample1", :role => "button"}
+                  %h5.m-0.font-weight-bold.text-primary Thông tin thêm
+                #collapseCardExample1.collapse.show
+                  .card-body
+                    .gp-field-group
+                      .gp-field-group-body
+                        .row
+                          .col
+                            .form-group
+                              = f.label :job, 'Nghề nghiệp'
+                              = f.text_field :job, class: 'form-control', disabled: @is_disabled
+                            .form-group
+                              = f.label :property_ownership, 'Tài sản sở hữu'
+                              = f.text_field :property_ownership, class: 'form-control', disabled: @is_disabled
+                            .form-group
+                              = f.label :nationality, 'Quốc tịch'
+                              = f.text_field :nationality, class: 'form-control', disabled: @is_disabled
+                            .form-group
+                              = f.label :financial_capability, 'Khả năng tài chính'
+                              = f.text_field :financial_capability, class: 'form-control', disabled: @is_disabled
+                            .form-group
+                              = f.label :detail, 'Mô tả thêm'
+                              = f.text_area :detail, class: 'form-control', disabled: @is_disabled
+                            .form-group
+                              = f.label :income, 'Thu nhập'
+                              = f.text_field :income, class: 'form-control', disabled: @is_disabled
+                            .form-group
+                              = f.label :position, 'Chức vụ'
+                              = f.text_field :position, class: 'form-control', disabled: @is_disabled
+                            .form-group
+                              = f.label :work_place, 'Nơi công tác'
+                              = f.text_field :work_place, class: 'form-control', disabled: @is_disabled
+                            .form-group
+                              = f.label :marital_status, 'Tình trạng hôn nhân'
+                              = f.select :marital_status, options_for_select(Constant::CUSTOMER_MARITAL_STATUS.invert, @customer.marital_status), {include_blank: "Vui lòng chọn"}, {class: 'form-control gp-select2', disabled: @is_disabled}
+              .card.shadow.mb-4
+                %a.d-block.card-header.py-3{"aria-controls" => "collapseCardExample2", "aria-expanded" => "true", "data-toggle" => "collapse", :href => "#collapseCardExample2", :role => "button"}
+                  %h5.m-0.font-weight-bold.text-primary Ghi chú
+                #collapseCardExample2.collapse.show
+                  .card-body
+                    #notes
+                      = f.fields_for :notes do |note|
+                        %div.note
+                          = render 'note_fields', f: note
+                      .links
+                        = link_to_add_association f, :notes do
+                          %button.btn.btn-primary{type: 'button', disabled: @is_disabled}
+                            %i.fas.fa-plus
+                            Thêm ghi chú

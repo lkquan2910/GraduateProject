@@ -1,0 +1,515 @@
+vi:
+  activerecord:
+    errors:
+      messages:
+        blank: 'Không được để trống trường này!'
+      models:
+        project:
+          attributes:
+            name:
+            # blank: 'Vui lòng nhập tên của dự án.'
+            real_estate_type:
+            # blank: 'Vui lòng chọn loại hình bất động sản.'
+            locking_time:
+              # blank: 'Vui lòng nhập thời gian lock căn.'
+              not_a_number: 'Thời gian lock căn phải là số.'
+              not_an_integer: 'Thời gian lock căn không có phần thập phân.'
+              greater_than: 'Thời gian lock căn không được nhập nhỏ hơn 0.'
+            construction_density:
+              not_a_number: 'Mật độ xây dựng phải là số.'
+              greater_than: 'Mật độ xây dựng không được nhập nhỏ hơn 0.'
+              less_than_or_equal_to: 'Mật độ xây dựng không được quá 100%.'
+            total_area:
+              not_a_number: 'Quy mô phải là số.'
+              greater_than: 'Quy mô nhập không được nhập nhỏ hơn 0.'
+            investors:
+            # blank: 'Vui lòng chọn chủ đầu tư của dự án.'
+            internal_utilities:
+            # blank: 'Vui lòng chọn tiện ích nội khu của dự án.'
+            ownership_period:
+            # blank: 'Vui lòng chọn thời hạn sở hữu của dự án.'
+            loan_percentage_support:
+              not_a_number: 'Hỗ trợ vay (%) phải là số.'
+              greater_than: 'Hỗ trợ vay (%) không được nhập nhỏ hơn 0.'
+              less_than_or_equal_to: 'Hỗ trợ vay (%) không được quá 100%.'
+            loan_support_period:
+              not_a_number: 'Thời gian hỗ trợ (tháng) phải là số.'
+              not_an_integer: 'Thời gian hỗ trợ (tháng) không có phần thập phân.'
+              greater_than: 'Thời gian hỗ trợ (tháng) không được nhập nhỏ hơn 0.'
+            bonus:
+              not_a_number: 'Thưởng nóng (VNĐ) phải là số.'
+              greater_than: 'Thưởng nóng (VNĐ) không được nhập nhỏ hơn 0.'
+            images:
+            # blank: 'Hình ảnh dự án không được để trống.'
+            floorplan_images:
+            # blank: 'Mặt bằng dự án không được để trống.'
+            high_level_number:
+              not_a_number: 'Số đợt thanh toán phải là số.'
+              not_an_integer: 'Số đợt thanh toán phải là số nguyên.'
+              greater_than: 'Số đợt thanh toán phải lớn hơn 0.'
+              # number_blank: 'Bạn phải nhập số đợt thanh toán'
+              equal_to_payment_schedule: 'Số đợt thanh toán và số tiến độ thanh toán phải bằng nhau.'
+              equal_to_value_payment_schedule: 'Tổng giá trị các đợt phải bằng 100%.'
+            low_level_number:
+              not_a_number: 'Số đợt thanh toán phải là số.'
+              not_an_integer: 'Số đợt thanh toán phải là số nguyên.'
+              greater_than: 'Số đợt thanh toán phải lớn hơn 0.'
+              # number_blank: 'Bạn phải nhập số đợt thanh toán'
+              equal_to_payment_schedule: 'Số đợt thanh toán và số tiến độ thanh toán phải bằng nhau.'
+              equal_to_value_payment_schedule: 'Tổng giá trị các đợt phải bằng 100%.'
+
+            price_from:
+              not_a_number: 'Giá nhỏ nhất phải là số.'
+              greater_than_or_equal_to: 'Giá nhỏ nhất không được nhập nhỏ hơn 0.'
+              less_than_or_equal_to: 'Giá nhỏ nhất không được nhập quá 1000.'
+            price_to:
+              not_a_number: 'Giá lớn nhất phải là số.'
+              greater_than_or_equal_to: 'Giá lớn nhất không được nhập nhỏ hơn 0.'
+              less_than_or_equal_to: 'Giá lớn nhất không được nhập quá 1000.'
+            area_from:
+              not_a_number: 'Diện tích nhỏ nhất phải là số.'
+              greater_than_or_equal_to: 'Diện tích nhỏ nhất không được nhập nhỏ hơn 0.'
+            area_to:
+              not_a_number: 'Diện tích lớn nhất phải là số.'
+              greater_than_or_equal_to: 'Diện tích nhỏ nhất không được nhập nhỏ hơn 0.'
+
+        legal_document:
+          attributes:
+            doc_type:
+            # blank: 'Vui lòng chọn loại tài liệu pháp lý của dự án.'
+            doc:
+            # blank: 'Vui lòng tải lên tài liệu pháp lý của dự án.'
+        customer:
+          attributes:
+            name:
+              # blank: 'Vui lòng nhập họ tên khách hàng.'
+              invalid: 'Tên khách hàng phải chứa tối thiểu 1 dấu cách'
+              # invalid: 'Họ tên khách hàng không hợp lệ.'
+            phone_number:
+              # blank: 'Vui lòng nhập số điện thoại của khách hàng.'
+              taken: 'Số điện thoại này đã tồn tại trên hệ thống.'
+              invalid: 'Số điện thoại không hợp lệ.'
+            email:
+              invalid: 'Email không hợp lệ.'
+            identity_card:
+              invalid: 'Số CMND không hợp lệ.'
+        note:
+          attributes:
+            content:
+            # blank: 'Vui lòng điền vào ghi chú hoặc xóa đi.'
+        product:
+          attributes:
+            name:
+            # blank: 'Vui lòng nhập mã căn.'
+            code:
+              # blank: 'Vui lòng nhập mã sản phẩm.'
+              taken: 'Mã sản phẩm đã tồn tại trên hệ thống.'
+            product_type:
+            # blank: 'Vui lòng nhập loại sản phẩm.'
+            statics:
+            # blank: 'Vui lòng nhập kết cấu.'
+            bedroom:
+            # blank: 'Vui lòng nhập số phòng ngủ.'
+            state:
+            # blank: 'Vui lòng nhập trạng thái.'
+            project_id:
+              # blank: 'Vui lòng nhập dự án.'
+              not_a_number: 'Dự án phải là số.'
+              not_an_integer: 'Dự án không có phần thập phân.'
+              greater_than: 'Dự án không được nhập nhỏ hơn 0.'
+            subdivision_id:
+            # blank: 'Vui lòng nhập phân khu.'
+            block_id:
+            # blank: 'Vui lòng nhập toà/dãy.'
+            floor_id:
+            # blank: 'Vui lòng nhập tầng.'
+            level:
+            # blank: 'Vui lòng nhập khối sản phẩm.'
+            real_estate_type:
+            # blank: 'Vui lòng chọn loại hình.'
+            certificate:
+            # blank: 'Vui lòng chọn hình thức sở hữu.'
+            use_term:
+            # blank: 'Vui lòng chọn thời hạn sở hữu.'
+            furniture:
+            # blank: 'Vui lòng chọn tiêu chuẩn bàn giao.'
+            furniture_quality:
+            # blank: 'Vui lòng chọn chất lượng nội thất.'
+            density:
+              # blank: 'Vui lòng nhập mật độ xây dựng.'
+              not_a_number: 'Mật độ xây dựng phải là số.'
+              greater_than: 'Mật độ xây dựng không được nhập nhỏ hơn 0.'
+            deposit:
+              # blank: 'Vui lòng nhập số tiền cọc.'
+              not_a_number: 'Số tiền cọc phải là số.'
+              greater_than: 'Số tiền cọc không được nhập nhỏ hơn 0.'
+            amount_of_floors:
+              # blank: 'Vui lòng nhập số tầng.'
+              not_a_number: 'Số tầng phải là số.'
+              greater_than: 'Số tầng không được nhập nhỏ hơn 0.'
+            direction:
+            # blank: 'Vui lòng chọn hướng.'
+            carpet_area:
+              # blank: 'Vui lòng nhập diện tích thông thuỷ.'
+              not_a_number: 'Diện tích thông thuỷ phải là số.'
+              greater_than: 'Diện tích thông thuỷ không được nhập nhỏ hơn 0.'
+            built_up_area:
+              # blank: 'Vui lòng nhập diện tích tim tường.'
+              not_a_number: 'Diện tích tim tường phải là số.'
+              greater_than: 'Diện tích tim tường không được nhập nhỏ hơn 0.'
+            plot_area:
+              # blank: 'Vui lòng nhập diện tích lô đất.'
+              not_a_number: 'Diện tích lô đất phải là số.'
+              greater_than: 'Diện tích lô đất không được nhập nhỏ hơn 0.'
+            floor_area:
+              # blank: 'Vui lòng nhập diện tích sử dụng.'
+              not_a_number: 'Diện tích sử dụng phải là số.'
+              greater_than: 'Diện tích sử dụng không được nhập nhỏ hơn 0.'
+            setback_front:
+              # blank: 'Vui lòng nhập khoảng lùi trước.'
+              not_a_number: 'Khoảng lùi trước phải là số.'
+              greater_than: 'Khoảng lùi trước không được nhập nhỏ hơn 0.'
+            setback_behind:
+              # blank: 'Vui lòng nhập khoảng lùi sau.'
+              not_a_number: 'Khoảng lùi sau phải là số.'
+              greater_than: 'Khoảng lùi sau không được nhập nhỏ hơn 0.'
+            handover_standards:
+            # blank: 'Vui lòng nhập tiêu chuẩn bàn giao.'
+            detail:
+            # blank: 'Vui lòng nhập mô tả.'
+            living_room:
+              not_a_number: 'Số phòng ngủ phải là số.'
+              not_an_integer: 'Số phòng ngủ không có phần thập phân.'
+              greater_than: 'Số phòng ngủ không được nhập nhỏ hơn 0.'
+            bath_room:
+              not_a_number: 'Số phòng tắm phải là số.'
+              not_an_integer: 'Số phòng tắm không có phần thập phân.'
+              greater_than: 'Số phòng tắm không được nhập nhỏ hơn 0.'
+            dining_room:
+              not_a_number: 'Số phòng ăn phải là số.'
+              not_an_integer: 'Số phòng ăn không có phần thập phân.'
+              greater_than: 'Số phòng ăn không được nhập nhỏ hơn 0.'
+            multipurpose_room:
+              not_a_number: 'Số phòng đa năng phải là số.'
+              not_an_integer: 'Số phòng đa năng không có phần thập phân.'
+              greater_than: 'Số phòng đa năng không được nhập nhỏ hơn 0.'
+            mini_bar:
+              not_a_number: 'Mini bar phải là số.'
+              not_an_integer: 'Mini bar không có phần thập phân.'
+              greater_than: 'Mini bar không được nhập nhỏ hơn 0.'
+            drying_yard:
+              not_a_number: 'Sân phơi phải là số.'
+              not_an_integer: 'Sân phơi không có phần thập phân.'
+              greater_than: 'Sân phơi không được nhập nhỏ hơn 0.'
+            kitchen:
+              not_a_number: 'Phòng bếp phải là số.'
+              not_an_integer: 'Phòng bếp không có phần thập phân.'
+              greater_than: 'Phòng bếp không được nhập nhỏ hơn 0.'
+            balcony:
+              not_a_number: 'Ban công phải là số.'
+              not_an_integer: 'Ban công không có phần thập phân.'
+              greater_than: 'Ban công không được nhập nhỏ hơn 0.'
+            business_space:
+              not_a_number: 'Không gian kinh doanh phải là số.'
+              not_an_integer: 'Không gian kinh doanh không có phần thập phân.'
+              greater_than: 'Không gian kinh doanh không được nhập nhỏ hơn 0.'
+            currency:
+              # blank: 'Vui lòng nhập đơn vị tiền tệ.'
+              not_a_number: 'Đơn vị tiền tệ phải là số.'
+              not_an_integer: 'Đơn vị tiền tệ không có phần thập phân.'
+              greater_than: 'Đơn vị tiền tệ không được nhập nhỏ hơn 0.'
+            price:
+              # blank: 'Vui lòng nhập đơn giá.'
+              not_a_number: 'Đơn giá phải là số.'
+              greater_than: 'Đơn giá không được nhập nhỏ hơn 0.'
+            sum_price:
+              # blank: 'Vui lòng nhập tổng GTCH.'
+              not_a_number: 'Tổng GTCH phải là số.'
+              greater_than: 'Tổng GTCH không được nhập nhỏ hơn 0.'
+        region:
+          attributes:
+            city_id:
+            # blank: 'Vui lòng chọn tỉnh/thành phố.'
+            district_id:
+            # blank: 'Vui lòng chọn quận/huyện.'
+        user:
+          attributes:
+            email:
+              # blank: 'Vui lòng nhập email.'
+              taken: 'Email đã tồn tại trong hệ thống vui lòng nhập email khác.'
+            password:
+              # blank: 'Vui lòng nhập mật khẩu.'
+              too_short: 'Mật khẩu độ dài từ 6 đến 20 ký tự.'
+            password_confirmation:
+              confirmation: 'Vui lòng xác nhận lại mật khẩu.'
+            full_name:
+              # blank: 'Vui lòng nhập tên tài khoản.'
+              invalid: 'Tên tài khoản phải chứa tối thiểu 1 dấu cách.'
+            account_type:
+            # blank: 'Vui lòng chọn loại tài khoản.'
+            role_id:
+            # blank: 'Vui lòng chọn quyền.'
+        role:
+          attributes:
+            name:
+              # blank: 'Vui lòng nhập tên phân quyền.'
+              taken: 'Quyền này đã tồn tại. Vui lòng chọn tên quyền khác.'
+        layout:
+          attributes:
+            name:
+            # blank: 'Tên mặt bằng không được để trống'
+            image:
+            # blank: 'Hình ảnh mặt bằng không được để trống'
+            subdivision_id:
+            # blank: 'Phân khu không được để trống'
+            block_id:
+            # blank: 'Toà/dãy không được để trống'
+            number_of_product:
+            # blank: 'Số sản phẩm/mặt bằng không được để trống'
+            level:
+            # blank: 'Khối sản phẩm không được để trống'
+            floor_ids:
+            # blank: 'Tầng không được để trống'
+        investor:
+          attributes:
+            name:
+            # blank: 'Vui lòng nhập tên của chủ đầu tư.'
+            description:
+            # blank: 'Vui lòng nhập mô tả của chủ đầu tư.'
+            logo:
+            # blank: 'Logo chủ đầu tư không được để trống.'
+        constructor:
+          attributes:
+            name:
+            # blank: 'Vui lòng nhập tên của tổng thầu.'
+            description:
+            # blank: 'Vui lòng nhập mô tả của tổng thầu.'
+            logo:
+            # blank: 'Logo tổng thầu không được để trống.'
+        development:
+          attributes:
+            name:
+            # blank: 'Vui lòng nhập tên của đơn vị phát triển'
+            description:
+            # blank: 'Vui lòng nhập mô tả của đơn vị phát triển'
+            logo:
+            # blank: 'Logo đơn vị phát triển không được để trống.'
+        operator:
+          attributes:
+            name:
+            # blank: 'Vui lòng nhập tên của đơn vị quản lý.'
+            description:
+            # blank: 'Vui lòng nhập mô tả của đơn vị quản lý.'
+            logo:
+            # blank: 'Logo đơn vị quản lý không được để trống.'
+        payment_schedule:
+          attributes:
+            name:
+            # blank: 'Tên đợt không thể để trống'
+            pay:
+              # blank: 'Giá trị thanh toán không thể để trống'
+              not_a_number: 'Giá trị thanh toán phải là số.'
+              greater_than: 'Giá trị thanh toán không được nhập nhỏ hơn 0.'
+              less_than_or_equal_to: 'Giá trị thanh toán không được quá 100%.'
+        deposit:
+          attributes:
+            customer_id:
+            # blank: 'Vui lòng cung cấp thông tin khách hàng để book căn hộ này.'
+            notes:
+            # canceled_blank: 'Vui lòng nhập lý do huỷ.'
+            deposit:
+            # blank: 'Vui lòng nhập Số tiền cọc để có thể chuyển trạng thái.'
+        customer_ticket:
+          attributes:
+            name:
+              # blank: 'Vui lòng nhập họ tên khách hàng.'
+              invalid: 'Tên khách hàng phải chứa tối thiểu 1 dấu cách'
+              # invalid: 'Họ tên khách hàng không hợp lệ.'
+            phone:
+              # blank: 'Vui lòng nhập số điện thoại của khách hàng.'
+              invalid: 'Số điện thoại không hợp lệ.'
+            email:
+              invalid: 'Email không hợp lệ.'
+            ticket_type:
+            # blank: 'Loại yêu cầu không thể để trống.'
+        ticket_note:
+          attributes:
+            content:
+            # blank: 'Vui lòng nhập nội dung ghi chú.'
+        banner:
+          attributes:
+            title:
+            # blank: 'Vui lòng nhập tiêu đề của banner.'
+            banner_desktop:
+            # blank: 'Banner Desktop không được để trống.'
+            banner_mobile:
+            # blank: 'Banner Mobile không được để trống.'
+            link:
+              invalid: 'Link không hợp lệ.'
+        call:
+          attributes:
+            result:
+            # blank: 'Kết quả không được để trống'
+            contact_date:
+              # blank: 'Ngày giờ gọi không được để trống'
+              invalid: 'Ngày giờ gọi không hợp lệ'
+        deal:
+          attributes:
+            email:
+              invalid: 'Email không hợp lệ.'
+            identity_card:
+              invalid: 'Số CMND không hợp lệ.'
+            second_phone_number:
+              invalid: 'Số điện thoại không hợp lệ.'
+            yob:
+              greater_than: "Năm sinh phải lớn hơn %{count}"
+              less_than: "Năm sinh phải nhỏ hơn %{count}"
+        interactive_layout:
+          attributes:
+            division_id:
+              taken: 'Mặt bằng đã tồn tại'
+        regulation:
+          attributes:
+            date_range: regulation_unique
+    models:
+      appointment: "Lịch hẹn"
+      call: "Cuộc gọi"
+      online_feedback: "Email & SMS"
+      feedback: "Phản hồi của KH"
+      note: "Ghi chú"
+    attributes:
+      appointment:
+        content: 'Nội dung'
+        appointment_date: 'Ngày hẹn gặp'
+        result: 'Kết quả'
+        state: 'Trạng thái'
+      call:
+        contact_date: 'Ngày giờ thực hiện'
+        result: 'Kết quả'
+      online_feedback:
+        action_type: 'Loại hành động'
+        action_date: 'Ngày giờ thực hiện'
+        content: 'Phản hồi của KH'
+      feedback:
+        title: 'Tiêu đề'
+        content: 'Phản hồi của KH'
+      note:
+        content: 'Nội dung'
+      deal:
+        name: 'Tên giao dịch'
+        project_id: 'Dự án quan tâm'
+        product_id: 'Mã sản phẩm'
+        customer_id: 'Khách hàng'
+        contact_status: 'Trạng thái liên hệ'
+        interest_level: 'Mức độ quan tâm'
+        demand: 'Nhu cầu khách hàng'
+        financial_capability: 'Khả năng tài chính'
+        demand_for_advances: 'Nhu cầu vay'
+        trouble_problem_list: 'Vấn đề vướng mắc'
+        trouble_problem: 'Chi tiết vướng mắc'
+        state: 'Trạng thái'
+        interaction_status: 'Trạng thái tương tác'
+        sub_source: 'Nguồn bổ sung'
+        interaction_detail: 'Chi tiết tương tác'
+        source: 'Nguồn'
+
+  alert:
+    no_authorize: 'Bạn không có quyền thực hiện hành động này.'
+    division_blank: "Vui lòng nhập tên %{name}"
+  product:
+    states:
+      for_sale: 'Còn hàng'
+      locking: 'Đang lock'
+      book: 'Chờ book'
+      deposited: 'Đã đặt cọc'
+      contract_signed: 'Ký hợp đồng GD'
+      sold: 'Đã bán'
+      recall: 'CĐT Thu hồi'
+      third_holding: 'Sàn khác giữ'
+      locking_display: 'Đã giữ'
+      third_sold: 'Sàn khác bán'
+
+    template:
+      high:
+        code: 'Mã sản phẩm'
+        subdivision: 'Phân khu'
+        block: 'Tòa'
+        floor: 'Tầng'
+        name: 'Mã Căn/Sàn'
+        real_estate_type: 'Loại hình'
+        product_type: 'Loại sản phẩm'
+        direction: 'Hướng ban công'
+        built_up_area: 'Diện tích tim tường (m2)'
+        carpet_area: 'Diện tích thông thủy (m2)'
+        currency: 'Đơn vị tiền tệ'
+        price: 'Đơn giá (Đã bao gồm VAT, KTBT)'
+        sum_price: 'Tổng GT (Đã bao gồm VAT, KPBT)'
+        certificate: 'Hình thức sở hữu'
+        use_term: 'Thời hạn sở hữu'
+        furniture: 'Tiêu chuẩn bàn giao'
+        furniture_quality: 'Chất lượng nội thất'
+        deposit: 'Số tiền cọc'
+      low:
+        code: 'Mã sản phẩm'
+        subdivision: 'Phân khu'
+        block: 'Đường/Dãy'
+        name: 'Mã Căn/Lô'
+        real_estate_type: 'Loại hình'
+        product_type: 'Loại sản phẩm'
+        direction: 'Hướng'
+        plot_area: 'Diện tích lô đất (m2)'
+        density: 'Mật độ xây dựng (%)'
+        floor_area: 'Diện tích sử dụng (m2)'
+        statics: 'Kết cấu'
+        currency: 'Đơn vị tiền tệ'
+        price: 'Đơn giá (Giá đất + XD)(Đã bao gồm VAT)'
+        sum_price: 'Tổng GT (Giá đất + XD)(Đã bao gồm VAT)'
+        certificate: 'Hình thức sở hữu'
+        use_term: 'Thời hạn sở hữu'
+        handover_standards: 'Tình trạng bàn giao'
+        deposit: 'Số tiền cọc'
+
+  deposit:
+    states:
+      request_lock: 'Chờ lock căn'
+      locked: 'Đã lock'
+      request_book: 'Chờ book căn'
+      deposited: 'Đã đặt cọc'
+      booked: 'Đã book'
+      contract_signed: 'Đã ký văn bản'
+      completed: 'Hoàn thành'
+      canceled: 'Đã hủy'
+    messages:
+      product_recall: 'Phiếu được chuyển sang trạng thái Đã hủy do sản phẩm bị thu hồi.'
+  customer_ticket:
+    states:
+      pending: 'Chờ xử lý'
+      processing: 'Đang xử lý'
+      completed: 'Đã hoàn thành'
+  user:
+    is_superadmin: 'Super admin'
+  customer:
+    states:
+      inauthentic: 'Chưa xác thực'
+      phone_authentic: 'Xác thực số điện thoại'
+      authentic: 'Xác thực đầy đủ'
+  deal:
+    states:
+      pending: Chờ xử lý
+      interest: Đang quan tâm
+      meet: Đã gặp
+      lock: Lock căn
+      confirm: Xác nhận với khách hàng
+      book: Chờ book
+      deposit: Đã đặt cọc
+      contract_signed: Ký hợp đồng GD
+      completed: Đã hoàn thành
+      canceled: Đã hủy
+      recall: 'Thu hồi'
+      request_recall: 'Đang thu hồi'
+  regulation:
+    states:
+      pending: Chờ duyệt
+      applying: Đang áp dụng
+      not_apply: Ngừng áp dụng
+      expired: Hết hạn

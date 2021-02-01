@@ -1,0 +1,154 @@
+!!!
+%html{:lang => "en"}
+  %head
+    %meta{:charset => "utf-8"}/
+    %meta{:content => "IE=edge", "http-equiv" => "X-UA-Compatible"}/
+    %meta{:content => "width=device-width, initial-scale=1, shrink-to-fit=no", :name => "viewport"}/
+    %meta{:content => "", :name => "description"}/
+    %meta{:content => "", :name => "author"}/
+    = favicon_link_tag asset_path('apple-touch-icon.png')
+    %title GRADUATE PROJECT
+    = csrf_meta_tags
+    = csp_meta_tag
+    %link{:href => "https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i", :rel => "stylesheet"}/
+    = stylesheet_link_tag 'application', media: 'all', 'data-turbolinks-track': 'reload'
+    = javascript_include_tag 'application', 'data-turbolinks-track': 'reload', 'data-turbolinks-eval': 'false', 'data-turbolinks-suppress-warning': 'true'
+  %body#page-top
+    #wrapper
+      %ul#accordionSidebar.navbar-nav.bg-gradient-primary.sidebar.sidebar-dark.z9999.position-fixed
+        %a.sidebar-brand.d-flex.align-items-center.justify-content-center{href: root_path}
+          .sidebar-brand-icon
+            %i.fas.fa-home
+          .sidebar-brand-text.mx-3
+            Graduate Project
+        %hr.sidebar-divider.my-0/
+        %li.nav-item.active
+          %a.nav-link{:href => ""}
+            %i.fas.fa-fw.fa-tachometer-alt
+            %span Dashboard
+        %hr.sidebar-divider.my-0
+        %li.nav-item
+          %a.nav-link{href: admin_customers_path}
+            %i.fas.fa-fw.fa-users
+            %span Khách Hàng
+          %a.nav-link{href: admin_projects_path}
+            %i.fas.fa-fw.fa-city{style: 'position: relative; bottom: 1px'}
+            %span Dự án
+          %a.nav-link{href: '#'}
+            %i.fa.fa-wpforms{style: 'font-size: medium'}
+            %span Giao dịch
+          %a.nav-link{href: '#'}
+            %i.fas.fa-fw.fa-user
+            %span Tài khoản
+        %hr.sidebar-divider.d-none.d-md-block
+        .text-center.d-none.d-md-inline
+          %button#sidebarToggle.rounded-circle.border-0
+      #content-wrapper.d-flex.flex-column
+        #content
+          / Topbar
+          %nav.navbar.navbar-expand.navbar-light.bg-white.topbar.mb-4.static-top.shadow
+            / Sidebar Toggle (Topbar)
+            %button#sidebarToggleTop.btn.btn-link.d-md-none.rounded-circle.mr-3
+              %i.fa.fa-bars
+            / Topbar Search
+
+            / Topbar Navbar
+            %ul.navbar-nav.ml-auto
+              / Nav Item - Search Dropdown (Visible Only XS)
+              %li.nav-item.dropdown.no-arrow.d-sm-none
+                %a#searchDropdown.nav-link.dropdown-toggle{"aria-expanded" => "false", "aria-haspopup" => "true", "data-toggle" => "dropdown", :href => "#", :role => "button"}
+                  %i.fas.fa-search.fa-fw
+                / Dropdown - Messages
+                .dropdown-menu.dropdown-menu-right.p-3.shadow.animated--grow-in{"aria-labelledby" => "searchDropdown"}
+                  %form.form-inline.mr-auto.w-100.navbar-search
+                    .input-group
+                      %input.form-control.bg-light.border-0.small{"aria-describedby" => "basic-addon2", "aria-label" => "Search", :placeholder => "Search for...", :type => "text"}/
+                      .input-group-append
+                        %button.btn.btn-primary{:type => "button"}
+                          %i.fas.fa-search.fa-sm
+              / Nav Item - Alerts
+              %li.nav-item.dropdown.no-arrow.mx-1
+                %a#alertsDropdown.nav-link.dropdown-toggle{"aria-expanded" => "false", "aria-haspopup" => "true", "data-toggle" => "dropdown", :href => "#", :role => "button"}
+                  %i.fas.fa-bell.fa-fw
+                  / Counter - Alerts
+                  %span.badge.badge-danger.badge-counter 3+
+                / Dropdown - Alerts
+                .dropdown-list.dropdown-menu.dropdown-menu-right.shadow.animated--grow-in{"aria-labelledby" => "alertsDropdown"}
+                  %h6.dropdown-header
+                    Alerts Center
+                  %a.dropdown-item.d-flex.align-items-center{:href => "#"}
+                    .mr-3
+                      .icon-circle.bg-primary
+                        %i.fas.fa-file-alt.text-white
+                    %div
+                      .small.text-gray-500 December 12, 2019
+                      %span.font-weight-bold A new monthly report is ready to download!
+                  %a.dropdown-item.d-flex.align-items-center{:href => "#"}
+                    .mr-3
+                      .icon-circle.bg-success
+                        %i.fas.fa-donate.text-white
+                    %div
+                      .small.text-gray-500 December 7, 2019
+                      $290.29 has been deposited into your account!
+                  %a.dropdown-item.d-flex.align-items-center{:href => "#"}
+                    .mr-3
+                      .icon-circle.bg-warning
+                        %i.fas.fa-exclamation-triangle.text-white
+                    %div
+                      .small.text-gray-500 December 2, 2019
+                      Spending Alert: We've noticed unusually high spending for your account.
+                  %a.dropdown-item.text-center.small.text-gray-500{:href => "#"} Show All Alerts
+              / Nav Item - Messages
+              %li.nav-item.dropdown.no-arrow.mx-1
+                %a#messagesDropdown.nav-link.dropdown-toggle{"aria-expanded" => "false", "aria-haspopup" => "true", "data-toggle" => "dropdown", :href => "#", :role => "button"}
+                  %i.fas.fa-envelope.fa-fw
+                  / Counter - Messages
+                  %span.badge.badge-danger.badge-counter 7
+                / Dropdown - Messages
+                .dropdown-list.dropdown-menu.dropdown-menu-right.shadow.animated--grow-in{"aria-labelledby" => "messagesDropdown"}
+                  %h6.dropdown-header
+                    Message Center
+                  %a.dropdown-item.d-flex.align-items-center{:href => "#"}
+                    .dropdown-list-image.mr-3
+                      %img.rounded-circle{:alt => "", :src => "https://source.unsplash.com/fn_BT9fwg_E/60x60"}/
+                      .status-indicator.bg-success
+                    .font-weight-bold
+                      .text-truncate Hi there! I am wondering if you can help me with a problem I've been having.
+                      .small.text-gray-500 Emily Fowler · 58m
+                  %a.dropdown-item.d-flex.align-items-center{:href => "#"}
+                    .dropdown-list-image.mr-3
+                      %img.rounded-circle{:alt => "", :src => "https://source.unsplash.com/AU4VPcFN4LE/60x60"}/
+                      .status-indicator
+                    %div
+                      .text-truncate I have the photos that you ordered last month, how would you like them sent to you?
+                      .small.text-gray-500 Jae Chun · 1d
+                  %a.dropdown-item.d-flex.align-items-center{:href => "#"}
+                    .dropdown-list-image.mr-3
+                      %img.rounded-circle{:alt => "", :src => "https://source.unsplash.com/CS2uCrpNzJY/60x60"}/
+                      .status-indicator.bg-warning
+                    %div
+                      .text-truncate Last month's report looks great, I am very happy with the progress so far, keep up the good work!
+                      .small.text-gray-500 Morgan Alvarez · 2d
+                  %a.dropdown-item.d-flex.align-items-center{:href => "#"}
+                    .dropdown-list-image.mr-3
+                      %img.rounded-circle{:alt => "", :src => "https://source.unsplash.com/Mv9hjnEUHR4/60x60"}/
+                      .status-indicator.bg-success
+                    %div
+                      .text-truncate Am I a good boy? The reason I ask is because someone told me that people say this to all dogs, even if they aren't good...
+                      .small.text-gray-500 Chicken the Dog · 2w
+                  %a.dropdown-item.text-center.small.text-gray-500{:href => "#"} Read More Messages
+              .topbar-divider.d-none.d-sm-block
+              = render 'layouts/account'
+          / End of Topbar
+          / Begin Page Content
+          .container-fluid
+            = yield :content_header
+          %section.content.mt-4.mb-4
+            .container-fluid{style: 'background-color: #f8f9fc !important'}
+              = render 'layouts/flash'
+              = yield :content_body
+  #modal-holder
+    = yield :content_footer
+    = yield :js
+    %a.scroll-to-top.rounded{:href => "#page-top"}
+      %i.fas.fa-angle-up

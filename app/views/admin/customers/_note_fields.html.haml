@@ -1,0 +1,16 @@
+.nested-fields
+  .row
+    .col-11
+      .form-group
+        .fields
+          = f.text_area :content, class: 'form-control', disabled: @is_disabled
+          = f.text_field :created_by_id, hidden: true, value: current_user.id
+          - f.object.errors.messages[:content].each do |content_error|
+            %span.invalid-feedback.custom-validation= content_error
+          %span= f.object.author.full_name if (f.object.author.present? && f.object.errors.blank?)
+          %span{style: 'font-style: oblique'}= '- Tạo lúc: ' + f.object.created_at.localtime.strftime('%d/%m/%Y %H:%M') if f.object.created_at.present?
+    .col-1
+      = link_to_remove_association f do
+        .form-group
+          %button.btn.btn-outline-danger{type: 'button', disabled: @is_disabled}
+            %i.fas.fa-trash
