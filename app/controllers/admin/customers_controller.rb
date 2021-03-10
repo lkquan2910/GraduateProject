@@ -4,7 +4,16 @@ class Admin::CustomersController < GraduateProjectController
   # GET /admin/customers
   # GET /admin/customers.json
   def index
+    #authorize :customer, :index?
+    #@customers = policy_scope(Customer)
+    query = params[:query].presence || "*"
     @customers = Customer.all
+    @pagy, @customers = pagy(@customers.search_result(query), items: Settings.admin.pagination.customer.per_page)
+  end
+
+  def autocomplete
+    #@customers = policy_scope(Customer)
+    render json: @customers.autocomplete_result(params[:query])
   end
 
   # GET /admin/customers/1

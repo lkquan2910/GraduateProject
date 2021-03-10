@@ -1,0 +1,37 @@
+admin:
+  pagination:
+    icdo:
+      per_page: 10
+    product:
+      per_page: 20
+      page: 1
+    project:
+      per_page: 20
+      page: 1
+    customer:
+      per_page: 12
+      page: 1
+    layout:
+      per_page: 20
+      page: 1
+    deposit:
+      per_page: 20
+      page: 1
+    notification:
+      per_page: 20
+      page: 1
+      limit: 10
+    customer_ticket:
+      per_page: 20
+      page: 1
+      limit: 10
+    role:
+      per_page: 20
+      page: 1
+      limit: 5
+    history:
+      per_page: 20
+    regulation:
+      per_page: 10
+    same_deal:
+      per_page: 20

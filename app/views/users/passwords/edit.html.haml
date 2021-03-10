@@ -1,19 +1,42 @@
-%h2 Change your password
-= form_for(resource, as: resource_name, url: password_path(resource_name), html: { method: :put }) do |f|
-  = render "users/shared/error_messages", resource: resource
-  = f.hidden_field :reset_password_token
-  .field
-    = f.label :password, "New password"
-    %br/
-    - if @minimum_password_length
-      %em
-        (#{@minimum_password_length} characters minimum)
-      %br/
-    = f.password_field :password, autofocus: true, autocomplete: "new-password"
-  .field
-    = f.label :password_confirmation, "Confirm new password"
-    %br/
-    = f.password_field :password_confirmation, autocomplete: "new-password"
-  .actions
-    = f.submit "Change my password"
-= render "users/shared/links"
+%body.bg-gradient-primary.login-page
+  .container
+    .row.justify-content-center
+      .col-xl-6.col-lg-6.col-md-9
+        .card.o-hidden.border-0.shadow-lg.my-5.px-1
+          .card-body.p-0
+            .row
+              .col-lg-12
+                .p-5
+                  .text-center
+                    %h1.h4.text-gray-900.mb-2 Khôi Phục Mật Khẩu
+                    %br
+                  = form_with(model: resource, as: resource_name, url: password_path(resource_name), html: { method: :put }, class: 'user', local: true) do |f|
+                    = f.hidden_field :reset_password_token
+                    .form-group
+                      = f.password_field :password, autofocus: true, autocomplete: 'new-password', class: 'form-control form-control-user', placeholder: 'Nhập mật khẩu mới....'
+                    .form-group
+                      = f.password_field :password_confirmation, autocomplete: 'new-password', class: 'form-control form-control-user', placeholder: 'Nhập lại mật khẩu mới....'
+                    = f.submit 'Xác nhận thay đổi mật khẩu', class: 'btn btn-primary btn-user btn-block'
+                  %hr/
+                  .text-center
+                    %a.small{href: new_user_session_path} Quay trở lại đăng nhập
+
+:javascript
+   var password = document.getElementById("user_password");
+   var password_confirmation = document.getElementById("user_password_confirmation");
+
+  function Validate() {
+    if (password.value.length < 6) {
+      password.setCustomValidity("Mật khẩu quá ngắn, mời thử lại!")
+    } else
+      password.setCustomValidity('');
+    if (password.value !== password_confirmation.value) {
+      password_confirmation.setCustomValidity("Mật khẩu không khớp, mời thử lại!");
+    } else
+      password_confirmation.setCustomValidity('');
+  }
+
+  password.onchange = Validate;
+  password.onkeyup = Validate;
+  password_confirmation.onkeyup = Validate;
+  password_confirmation.onchange = Validate;

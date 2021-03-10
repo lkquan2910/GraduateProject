@@ -7,10 +7,10 @@
             %i.fas.fa-check-circle.icon-successful
             %span.text-successful Successfully!
             %button.close{"aria-hidden" => "true", "data-dismiss" => "alert", :type => "button"}
-              %i.fas.fa-times{style: 'font-size: 22px'}
+              %i.fas.fa-times{style: 'font-size: 20px'}
         %span= msg
     - if %w(error alert).include? name
-      %div.tms-flash-alert.alert
+      %div.flash-alert.alert
         .row
           .col{style: 'padding-bottom: 8px'}
             %i.fas.fa-times-circle.icon-error

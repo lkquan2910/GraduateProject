@@ -1,0 +1,3 @@
+class Development < ApplicationRecord
+
+end

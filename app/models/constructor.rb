@@ -1,0 +1,3 @@
+class Constructor < ApplicationRecord
+
+end
