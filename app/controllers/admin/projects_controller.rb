@@ -4,8 +4,15 @@ class Admin::ProjectsController < GraduateProjectController
   # GET /admin/projects
   # GET /admin/projects.json
   def index
-    @admin_projects = Project.all
+    query = params[:query].presence || "*"
+    @projects = Project.all
+    @pagy, @projects = pagy(@projects.search_result(query), items: Settings.admin.pagination.customer.per_page)
   end
+
+  def autocomplete
+    render json: @projects.autocomplete_result(params[:query])
+  end
+
 
   # GET /admin/projects/1
   # GET /admin/projects/1.json
@@ -14,7 +21,7 @@ class Admin::ProjectsController < GraduateProjectController
 
   # GET /admin/projects/new
   def new
-    @admin_project = Project.new
+    @project = Project.new
   end
 
   # GET /admin/projects/1/edit
@@ -24,15 +31,15 @@ class Admin::ProjectsController < GraduateProjectController
   # POST /admin/projects
   # POST /admin/projects.json
   def create
-    @admin_project = Project.new(admin_project_params)
+    @project = Project.new(admin_project_params)
 
     respond_to do |format|
-      if @admin_project.save
-        format.html { redirect_to @admin_project, notice: 'Project was successfully created.' }
-        format.json { render :show, status: :created, location: @admin_project }
+      if @project.save
+        format.html { redirect_to @project, notice: 'Project was successfully created.' }
+        format.json { render :show, status: :created, location: @project }
       else
         format.html { render :new }
-        format.json { render json: @admin_project.errors, status: :unprocessable_entity }
+        format.json { render json: @project.errors, status: :unprocessable_entity }
       end
     end
   end
@@ -41,12 +48,12 @@ class Admin::ProjectsController < GraduateProjectController
   # PATCH/PUT /admin/projects/1.json
   def update
     respond_to do |format|
-      if @admin_project.update(admin_project_params)
-        format.html { redirect_to @admin_project, notice: 'Project was successfully updated.' }
-        format.json { render :show, status: :ok, location: @admin_project }
+      if @project.update(admin_project_params)
+        format.html { redirect_to @project, notice: 'Project was successfully updated.' }
+        format.json { render :show, status: :ok, location: @project }
       else
         format.html { render :edit }
-        format.json { render json: @admin_project.errors, status: :unprocessable_entity }
+        format.json { render json: @project.errors, status: :unprocessable_entity }
       end
     end
   end
@@ -54,7 +61,7 @@ class Admin::ProjectsController < GraduateProjectController
   # DELETE /admin/projects/1
   # DELETE /admin/projects/1.json
   def destroy
-    @admin_project.destroy
+    @project.destroy
     respond_to do |format|
       format.html { redirect_to admin_projects_url, notice: 'Project was successfully destroyed.' }
       format.json { head :no_content }
@@ -64,7 +71,7 @@ class Admin::ProjectsController < GraduateProjectController
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_project
-      @admin_project = Project.find(params[:id])
+      @project = Project.find(params[:id])
     end
 
     # Only allow a list of trusted parameters through.

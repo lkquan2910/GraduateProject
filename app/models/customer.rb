@@ -1,5 +1,6 @@
 class Customer < ApplicationRecord
   include AASM
+  include CustomerSearch
   # Associations
   belongs_to :city, class_name: 'RegionData', foreign_key: :city_id, optional: true
   has_many :notes, as: :objectable, dependent: :destroy

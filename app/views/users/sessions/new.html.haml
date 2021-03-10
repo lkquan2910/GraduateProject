@@ -9,7 +9,7 @@
                 .p-5
                   .text-center
                     %h1.h4.text-gray-900.mb-4 Welcome!
-                  = form_with model: resource, as: resource_name, url: session_path(resource_name), class: 'user' do |f|
+                  = form_with model: resource, as: resource_name, url: session_path(resource_name), class: 'user', local: true do |f|
                     .form-group
                       = f.email_field :email, id: 'exampleInputEmail', class: 'form-control form-control-user',"aria-describedby" => "emailHelp", placeholder: "Enter Email Address...", type: "email"
                     .form-group
@@ -22,5 +22,5 @@
                     = f.submit "Đăng nhập", class: 'btn btn-primary btn-user btn-block'
                   %hr/
                   .text-center
-                    %a.small{:href => "forgot-password.html"} Quên mật khẩu?
+                    %a.small{href: new_user_password_path} Quên mật khẩu?
                     -#= render "users/shared/links"

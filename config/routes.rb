@@ -24,8 +24,20 @@ Rails.application.routes.draw do
   end
 
   namespace :admin do
-    resources :projects
-    resources :customers
+    resources :projects do
+      collection do
+        get :autocomplete
+      end
+    end
+    resources :customers do
+      collection do
+        get :autocomplete
+      end
+    end
+    resources :investors
+    resources :constructors
+    resources :developments
+    resources :operators
     resources :users
   end
 end

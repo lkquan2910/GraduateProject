@@ -15,37 +15,9 @@
     = javascript_include_tag 'application', 'data-turbolinks-track': 'reload', 'data-turbolinks-eval': 'false', 'data-turbolinks-suppress-warning': 'true'
   %body#page-top
     #wrapper
-      %ul#accordionSidebar.navbar-nav.bg-gradient-primary.sidebar.sidebar-dark.z9999.position-fixed
-        %a.sidebar-brand.d-flex.align-items-center.justify-content-center{href: root_path}
-          .sidebar-brand-icon
-            %i.fas.fa-home
-          .sidebar-brand-text.mx-3
-            Graduate Project
-        %hr.sidebar-divider.my-0/
-        %li.nav-item.active
-          %a.nav-link{:href => ""}
-            %i.fas.fa-fw.fa-tachometer-alt
-            %span Dashboard
-        %hr.sidebar-divider.my-0
-        %li.nav-item
-          %a.nav-link{href: admin_customers_path}
-            %i.fas.fa-fw.fa-users
-            %span Khách Hàng
-          %a.nav-link{href: admin_projects_path}
-            %i.fas.fa-fw.fa-city{style: 'position: relative; bottom: 1px'}
-            %span Dự án
-          %a.nav-link{href: '#'}
-            %i.fa.fa-wpforms{style: 'font-size: medium'}
-            %span Giao dịch
-          %a.nav-link{href: '#'}
-            %i.fas.fa-fw.fa-user
-            %span Tài khoản
-        %hr.sidebar-divider.d-none.d-md-block
-        .text-center.d-none.d-md-inline
-          %button#sidebarToggle.rounded-circle.border-0
-      #content-wrapper.d-flex.flex-column
+      = render partial: 'layouts/sidebar'
+      #content-wrapper.d-flex.flex-column.ml-0
         #content
-          / Topbar
           %nav.navbar.navbar-expand.navbar-light.bg-white.topbar.mb-4.static-top.shadow
             / Sidebar Toggle (Topbar)
             %button#sidebarToggleTop.btn.btn-link.d-md-none.rounded-circle.mr-3
@@ -139,8 +111,6 @@
                   %a.dropdown-item.text-center.small.text-gray-500{:href => "#"} Read More Messages
               .topbar-divider.d-none.d-sm-block
               = render 'layouts/account'
-          / End of Topbar
-          / Begin Page Content
           .container-fluid
             = yield :content_header
           %section.content.mt-4.mb-4
@@ -150,5 +120,3 @@
   #modal-holder
     = yield :content_footer
     = yield :js
-    %a.scroll-to-top.rounded{:href => "#page-top"}
-      %i.fas.fa-angle-up

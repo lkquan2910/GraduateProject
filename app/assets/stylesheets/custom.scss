@@ -2,11 +2,17 @@
   background-color: #f8f9fc;
 }
 
-.gp-bg-gradient-primary {
-  background-color: #FC6103;
-  background-image: linear-gradient(180deg, #FA8128 10%, #FC6103 100%);
-  background-size: cover;
+.btn-gp-import {
   color: white;
+  background-color: #FC6103;
+  float: right !important;
+  width: 24%;
+}
+
+.btn-gp-import:hover {
+  color: white;
+  background-color: #EA5F02;
+  border-color: #EA5F02;
 }
 
 .button-save {
@@ -62,16 +68,23 @@ body:not(.sidebar-toggled) {
 }
 
 .header-back {
-  font-size: 18px;
+  font-size: 20px;
 }
 
 .flash-notice {
-  background: aliceblue;
+  background: honeydew;
   border-color: #e3e6f0;
+  .icon-successful {
+    color: #1cc88a;
+  }
 }
 
-.icon-successful {
-  color: #1cc88a;
+.flash-alert {
+  background: lavenderblush;
+  border-color: #e3e6f0;
+  .icon-error {
+    color: #dc3545;
+  }
 }
 
 .custom-validation {

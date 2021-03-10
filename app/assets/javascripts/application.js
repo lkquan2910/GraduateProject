@@ -20,4 +20,7 @@
 //= require initialize
 //= require custom
 //= require select2
+//= require typeahead.bundle.min
+//= require cocoon
+//= require customer
 
