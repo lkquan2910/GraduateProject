@@ -1,0 +1,55 @@
+.row
+  .col
+    = form_with model: [:admin, @user], local: true do |f|
+      .row.sticky-top
+        .col
+          .card.mb-3
+            .card-body
+              .float-right
+                %button.btn.button-save.btn-danger= @user.new_record? ? 'Lưu' : 'Lưu thay đổi'
+      .row
+        .col-6
+          .card.shadow.mb-4
+            %a.d-block.card-header.py-3{"aria-controls" => "collapseCardExampleconstructor", "aria-expanded" => "true", "data-toggle" => "collapse", :href => "#collapseCardExampleconstructor", :role => "button"}
+              %h5.m-0.font-weight-bold.text-primary Thông tin chính
+            #collapseCardExampleconstructor.collapse.show
+              .card-body
+                .gp-field-group
+                  .gp-field-group-body
+                    .form-group
+                      = f.label :email, 'Email'
+                      = f.email_field :email, class: 'form-control'
+                      - f.object.errors.messages[:email].each do |email_error|
+                        %span.invalid-feedback.custom-validation= email_error
+                    .form-group
+                      = f.label :password, 'Mật khẩu'
+                      = f.password_field :password, class: 'form-control'
+                      - f.object.errors.messages[:password].each do |password_error|
+                        %span.invalid-feedback.custom-validation= password_error
+                    .form-group
+                      = f.label :password, 'Xác nhận mật khẩu'
+                      = f.password_field :password_confirmation, class: 'form-control'
+                      - f.object.errors.messages[:password_confirmation].each do |password_confirmation_error|
+                        %span.invalid-feedback.custom-validation= password_confirmation_error
+                    .form-group
+                      = f.label :full_name, 'Tên'
+                      = f.text_field :full_name, class: 'form-control'
+                      - f.object.errors.messages[:full_name].each do |full_name_error|
+                        %span.invalid-feedback.custom-validation= full_name_error
+                    .form-group
+                      = f.check_box :is_superadmin, checked: @user.is_superadmin, class: 'gp-icheck', data: {skin: 'square', color: 'blue'}
+                      = f.label :is_superadmin, I18n.t("user.is_superadmin"), class: 'margin-right-5'
+                      - f.object.errors.messages[:is_superadmin].each do |error|
+                        %span.invalid-feedback.custom-validation= error
+                    .form-group
+                      = f.label :account_type, 'Loại tài khoản'
+                      = f.select :account_type, options_for_select(User.account_types.keys.map { |w| [w.humanize, w] }, @user.account_type), {include_blank: true}, { class: 'gp-select2 form-control' }
+                    - if current_user.internal? || current_user.agent?
+                      .form-group
+                        = f.label :role_id, 'Quyền'
+                        = f.select :role_id, options_for_select(Role.all.map { |w| [w.name.humanize, w.id] }, @user.role_id), {include_blank: true}, { class: 'gp-select2 form-control' }
+                        - f.object.errors.messages[:account_type].each do |account_type_error|
+                          %span.invalid-feedback.custom-validation= account_type_error
+                    .form-group
+                      = f.label :deactivated, 'Trạng thái tài khoản'
+                      = f.select :deactivated, options_for_select([["Hoạt động", false], ["Vô hiệu hóa", true]], @user.deactivated), {include_blank: true}, { class: 'gp-select2 form-control' }

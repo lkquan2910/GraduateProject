@@ -1,6 +1,10 @@
+- content_for :content_header do
+  .col-sm-6
+    %h2.text-gray-800 Thêm Khách Hàng
+  .col-sm-12.mt-2
+    %a.main-header--back{href: admin_customers_path}
+      %i.fas.fa-chevron-left
+        Trở lại danh sách
+
 - content_for :content_body do
-  %h3.text-gray-800 Thêm mới khách hàng
-  %a.header-back{href: admin_customers_path}
-    %i.fas.fa-angle-left
-      Trở lại danh sách
   = render 'form'

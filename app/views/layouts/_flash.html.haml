@@ -9,7 +9,7 @@
             %button.close{"aria-hidden" => "true", "data-dismiss" => "alert", :type => "button"}
               %i.fas.fa-times{style: 'font-size: 20px'}
         %span= msg
-    - if %w(error alert).include? name
+    - if %w(error alert warning).include? name
       %div.flash-alert.alert
         .row
           .col{style: 'padding-bottom: 8px'}

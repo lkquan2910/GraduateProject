@@ -1,0 +1,42 @@
+.col
+  = form_with model: [:admin, @development], local: true do |f|
+    - unless @is_disabled
+      .row.mb-3
+        .col
+          .card
+            .card-body
+              .float-right
+                %button.btn.button-save.btn-danger= @development.new_record? ? 'Lưu' : 'Lưu thay đổi'
+    .row
+      .col-6
+        .card.shadow.mb-4
+          %a.d-block.card-header.py-3{"aria-controls" => "collapseCardExampleDevelopment", "aria-expanded" => "true", "data-toggle" => "collapse", :href => "#collapseCardExampleDevelopment", :role => "button"}
+            %h5.m-0.font-weight-bold.text-primary Thông tin chính
+          #collapseCardExampleDevelopment.collapse.show
+            .card-body
+              .gp-field-group
+                .gp-field-group-body
+                  .row
+                    .col
+                      .form-group
+                        = f.label :name, 'Tên'
+                        = f.text_field :name, class: 'form-control', disabled: @is_disabled
+                        - f.object.errors.messages[:name].each do |name_error|
+                          %span.invalid-feedback.custom-validation= name_error
+                      .form-group
+                        = f.label :description, 'Mô tả thêm'
+                        = f.text_area :description, class: 'form-control', disabled: @is_disabled
+                        - f.object.errors.messages[:description].each do |description_error|
+                          %span.invalid-feedback.custom-validation= description_error
+                      .gp-field-group
+                        .gp-field-group-header
+                          %span Logo
+                        .gp-field-group-body
+                          - if @development.logo.present?
+                            = hidden_field :development, :logo, value: @development.logo.identifier, 'data-url': @development.logo.url, 'data-delete-url': destroy_attachment_admin_development_path(@development)
+                          .row
+                            .col
+                              .file-loading
+                                = f.file_field :logo, id: 'development-logo-input', 'data-browse-on-zone-click': true, 'data-show-upload': false, 'data-show-caption': true, 'data-msg-placeholder': 'Chọn file', disabled: @is_disabled
+                                - f.object.errors.messages[:logo].each do |logo_error|
+                                  %span.invalid-feedback.custom-validation= logo_error

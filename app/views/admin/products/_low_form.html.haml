@@ -1,0 +1,218 @@
+.row
+  .col
+    .card.gp-card
+      .card-header
+        %h3.card-title Thông tin chung
+        .card-tools
+          %button.btn.btn-tool{type: 'button', data: {card_widget: 'collapse'}}
+            %i.fas.fa-minus
+      .card-body
+        .gp-field-group
+          .gp-field-group-body
+            .row
+              .col
+                .form-group
+                  = f.label :project_id, 'Dự án'
+                  = f.select :project_id, options_for_select(@projects, @project.id), {include_blank: true}, { class: 'gp-select2 form-control', id: 'project', disabled: @is_disabled || f.object.id}
+                  - f.object.errors.messages[:project_id].each do |error|
+                    %span.invalid-feedback.custom-validation= error
+                .form-group
+                  = f.label :level, 'Khối'
+                  = f.select :level, options_for_select(constant_options(Constant::PRODUCT_LEVELS), @product.level), {}, { class: 'gp-select2 form-control', disabled: @is_disabled || f.object.id }
+                  - f.object.errors.messages[:level].each do |error|
+                    %span.invalid-feedback.custom-validation= error
+                .form-group
+                  = f.label :code, 'Mã sản phẩm'
+                  = f.text_field :code, class: 'form-control', disabled: @is_disabled
+                  - f.object.errors.messages[:code].each do |error|
+                    %span.invalid-feedback.custom-validation= error
+                .form-group
+                  = f.label :subdivision_id, 'Phân khu'
+                  = f.select :subdivision_id, options_for_select(@subdivisions, @product.subdivision_id), {include_blank: true}, { class: 'gp-select2 form-control select2-subdivision', data: {'select-child-target': ['product_block_id', 'product_floor_id'], id: 'subdivision'}, disabled: @is_disabled || f.object.id }
+                  - f.object.errors.messages[:subdivision_id].each do |error|
+                    %span.invalid-feedback.custom-validation= error
+                .form-group
+                  = f.label :block_id, 'Đường/Dãy'
+                  = f.select :block_id, options_for_select(@blocks, @product.block_id), {include_blank: true}, { class: 'gp-select2 form-control select2-block', data: {'select-child-target': ['product_floor_id'], id: 'floor'}, disabled: @is_disabled || f.object.id }
+                  - f.object.errors.messages[:block_id].each do |error|
+                    %span.invalid-feedback.custom-validation= error
+                .form-group
+                  = f.label :name, 'Mã Căn/Lô'
+                  = f.text_field :name, class: 'form-control', disabled: @is_disabled || f.object.id
+                  - f.object.errors.messages[:name].each do |error|
+                    %span.invalid-feedback.custom-validation= error
+                .form-group
+                  = f.label :real_estate_type, 'Loại hình'
+                  = f.select :real_estate_type, options_for_select(constant_options(Constant::PRODUCT_REAL_ESTATE_TYPES, @product.level), @product.real_estate_type), {include_blank: true}, { class: 'gp-select2 form-control', disabled: @is_disabled }
+                  - f.object.errors.messages[:real_estate_type].each do |error|
+                    %span.invalid-feedback.custom-validation= error
+                .form-group
+                  = f.label :product_type, 'Loại sản phẩm'
+                  = f.text_field :product_type, class: 'form-control', disabled: @is_disabled
+                  - f.object.errors.messages[:product_type].each do |error|
+                    %span.invalid-feedback.custom-validation= error
+                .form-group
+                  = f.label :direction, 'Hướng'
+                  = f.select :direction, options_for_select(constant_options(Constant::PRODUCT_DIRECTIONS), @product.direction), {include_blank: true}, { class: 'gp-select2 form-control', disabled: @is_disabled }
+                  - f.object.errors.messages[:direction].each do |error|
+                    %span.invalid-feedback.custom-validation= error
+                .form-group
+                  = f.label :plot_area, 'Diện tích lô đất (m2)'
+                  = f.number_field :plot_area, class: 'form-control', disabled: @is_disabled
+                  - f.object.errors.messages[:plot_area].each do |error|
+                    %span.invalid-feedback.custom-validation= error
+                .form-group
+                  = f.label :density, 'Mật độ xây dựng (%)'
+                  = f.number_field :density, class: 'form-control', disabled: @is_disabled
+                  - f.object.errors.messages[:density].each do |error|
+                    %span.invalid-feedback.custom-validation= error
+                .form-group
+                  = f.label :floor_area, 'Diện tích sử dụng (m2)'
+                  = f.number_field :floor_area, class: 'form-control', disabled: @is_disabled
+                  - f.object.errors.messages[:floor_area].each do |error|
+                    %span.invalid-feedback.custom-validation= error
+                .form-group
+                  = f.label :statics, 'Kết cấu'
+                  = f.text_field :statics, class: 'form-control', disabled: @is_disabled
+                  - f.object.errors.messages[:statics].each do |error|
+                    %span.invalid-feedback.custom-validation= error
+
+  .col
+    .card.gp-card
+      .card-header
+        %h3.card-title Thông tin chi tiết
+        .card-tools
+          %button.btn.btn-tool{type: 'button', data: {card_widget: 'collapse'}}
+            %i.fas.fa-minus
+      .card-body
+        .gp-field-group
+          .gp-field-group-header
+            %span Giá sản phẩm & phí dịch vụ
+          .gp-field-group-body
+            .row
+              .col
+                .form-group
+                  = f.label :currency, 'Đơn vị tiền tệ'
+                  = f.select :currency, options_for_select(constant_options(Constant::PRODUCT_CURRENCIES),@product.currency), {include_blank: true}, { class: 'gp-select2 form-control', disabled: @is_disabled }
+                  - f.object.errors.messages[:currency].each do |error|
+                    %span.invalid-feedback.custom-validation= error
+                .form-group
+                  = f.label :price, 'Đơn giá (Giá đất + XD)(Đã bao gồm VAT)'
+                  = f.text_field :price, class: 'form-control', 'data-type': 'currency', disabled: @is_disabled
+                  - f.object.errors.messages[:price].each do |error|
+                    %span.invalid-feedback.custom-validation= error
+                .form-group
+                  = f.label :sum_price, 'Tổng GT (Giá đất + XD) (Đã bao gồm VAT)'
+                  = f.text_field :sum_price, class: 'form-control', 'data-type': 'currency', disabled: @is_disabled
+                  - f.object.errors.messages[:sum_price].each do |error|
+                    %span.invalid-feedback.custom-validation= error
+                .form-group
+                  = f.label :deposit, 'Số tiền cọc (VNĐ)'
+                  = f.text_field :deposit, class: 'form-control', 'data-type': 'currency', disabled: @is_disabled
+                  - f.object.errors.messages[:deposit].each do |error|
+                    %span.invalid-feedback.custom-validation= error
+        .gp-field-group
+          .gp-field-group-header
+            %span Pháp lý sở hữu
+          .gp-field-group-body
+            .row
+              .col
+                .form-group
+                  = f.label :certificate, 'Hình thức sở hữu'
+                  = f.select :certificate, options_for_select(constant_options(Constant::PRODUCT_CERTIFICATES), @product.certificate), {include_hidden: false}, { class: 'gp-select2 form-control', multiple: true, disabled: @is_disabled}
+                  - f.object.errors.messages[:certificate].each do |error|
+                    %span.invalid-feedback.custom-validation= error
+                .form-group
+                  = f.label :use_term, 'Thời hạn sở hữu'
+                  = f.select :use_term, options_for_select(constant_options(Constant::PRODUCT_USE_TERMS), @product.use_term), {include_blank: true}, { class: 'gp-select2 form-control', disabled: @is_disabled }
+                  - f.object.errors.messages[:use_term].each do |error|
+                    %span.invalid-feedback.custom-validation= error
+        .gp-field-group
+          .gp-field-group-header
+            %span Tiêu chuẩn bàn giao
+          .gp-field-group-body
+            .row
+              .col
+                .form-group
+                  = f.label :handover_standards, 'Tiêu chuẩn bàn giao'
+                  = f.text_field :handover_standards, class: 'form-control', disabled: @is_disabled
+                  - f.object.errors.messages[:handover_standards].each do |error|
+                    %span.invalid-feedback.custom-validation= error
+        .gp-field-group
+          .gp-field-group-header
+            %span
+              Hình ảnh
+              %span.required
+                *
+          .gp-field-group-body
+            - @product.images.each do |image|
+              = hidden_field :product, :images, multiple: true, value: image.identifier, class: 'images-item', 'data-url': image.url, 'data-delete-url': @product.new_record? ? '' : destroy_attachment_admin_project_product_path(@project, @product)
+            = f.hidden_field :images_cache
+            .row
+              .col.form-group
+                .file-loading
+                  = f.file_field :images, multiple: true, id: 'product-images-input', 'data-browse-on-zone-click': true, 'data-show-upload': false, 'data-show-caption': true, 'data-msg-placeholder': 'Chọn file', disabled: @is_disabled
+                  - f.object.errors.messages[:images].each do |image_error|
+                    %span.invalid-feedback.custom-validation= image_error
+  .col
+    .card.gp-card
+      .card-header
+        %h3.card-title Thông số khác
+        .card-tools
+          %button.btn.btn-tool{type: 'button', data: {card_widget: 'collapse'}}
+            %i.fas.fa-minus
+      .card-body
+        .gp-field-group
+          .gp-field-group-body
+            .row
+              .col
+                .form-group
+                  = f.label :living_room, 'Số phòng khách'
+                  = f.number_field :living_room, class: 'form-control', disabled: @is_disabled
+                  - f.object.errors.messages[:living_room].each do |error|
+                    %span.invalid-feedback.custom-validation= error
+                .form-group
+                  = f.label :bedroom, 'Số phòng ngủ'
+                  = f.text_field :bedroom, class: 'form-control', disabled: @is_disabled
+                  - f.object.errors.messages[:bedroom].each do |error|
+                    %span.invalid-feedback.custom-validation= error
+                .form-group
+                  = f.label :bath_room, 'Số WC'
+                  = f.number_field :bath_room, class: 'form-control', disabled: @is_disabled
+                  - f.object.errors.messages[:bath_room].each do |error|
+                    %span.invalid-feedback.custom-validation= error
+                .form-group
+                  = f.label :dining_room, 'Số phòng ăn'
+                  = f.number_field :dining_room, class: 'form-control', disabled: @is_disabled
+                  - f.object.errors.messages[:dining_room].each do |error|
+                    %span.invalid-feedback.custom-validation= error
+                .form-group
+                  = f.label :multipurpose_room, 'Số phòng đa năng'
+                  = f.number_field :multipurpose_room, class: 'form-control', disabled: @is_disabled
+                  - f.object.errors.messages[:multipurpose_room].each do |error|
+                    %span.invalid-feedback.custom-validation= error
+                .form-group
+                  = f.label :mini_bar, 'Minibar'
+                  = f.number_field :mini_bar, class: 'form-control', disabled: @is_disabled
+                  - f.object.errors.messages[:mini_bar].each do |error|
+                    %span.invalid-feedback.custom-validation= error
+                .form-group
+                  = f.label :drying_yard, 'Sân phơi'
+                  = f.number_field :drying_yard, class: 'form-control', disabled: @is_disabled
+                  - f.object.errors.messages[:drying_yard].each do |error|
+                    %span.invalid-feedback.custom-validation= error
+                .form-group
+                  = f.label :kitchen, 'Phòng bếp'
+                  = f.number_field :kitchen, class: 'form-control', disabled: @is_disabled
+                  - f.object.errors.messages[:kitchen].each do |error|
+                    %span.invalid-feedback.custom-validation= error
+                .form-group
+                  = f.label :balcony, 'Ban công'
+                  = f.number_field :balcony, class: 'form-control', disabled: @is_disabled
+                  - f.object.errors.messages[:balcony].each do |error|
+                    %span.invalid-feedback.custom-validation= error
+                .form-group
+                  = f.label :business_space, 'Không gian kinh doanh'
+                  = f.number_field :business_space, class: 'form-control', disabled: @is_disabled
+                  - f.object.errors.messages[:business_space].each do |error|
+                    %span.invalid-feedback.custom-validation= error

@@ -10,8 +10,8 @@
           %form.mr-auto.my-2.my-md-0.mw-100.navbar-search
             .input-group
               = form_with url: admin_projects_path, method: :get, local: true, class: 'input-group search-group' do |f|
-                = f.text_field :query, value: params[:query], id: 'customer-search', class: 'form-control bg-light border-0 small', type: 'search', placeholder: 'Tìm kiếm...'
-                .input-group-append1
+                = f.text_field :query, value: params[:query], id: 'project-search', class: 'form-control bg-light border-0 small', type: 'search', placeholder: 'Tìm kiếm...'
+                .input-group-append
                   %button.btn.btn-primary{type: 'submit', style: 'height: 38px !important'}
                     %i.fa.fa-search.fa-sm
   .card
@@ -34,8 +34,7 @@
           %tbody
             - @projects.each do |project|
               %tr
-                %td.align-middle.first-col-stick= image_tag(project.images.first.url, class: 'img-thumbnail', style: 'width: 100px') if project.images.first.present?
-                -#%td.align-middle.second-col-stick= "DA-#{project.id}"
+                %td.align-middle= image_tag(project.images.first.url, class: 'img-thumbnail', style: 'width: 100px') if project.images.first.present?
                 %td.align-middle.second-col-stick= project.name
                 %td.align-middle= project.real_estate_type_name.join(', ')
                 %td.align-middle= project.region&.city&.name
@@ -53,10 +52,6 @@
             .row
               .col-6
                 = render partial: 'shared/pagination', locals: { pagy: @pagy }
-              .col-6
-                %a.btn.btn-gp-import
-                  %i.fas.fa-upload.mr-2
-                  Import
 
 - content_for :content_footer do
   %footer.main-footer.main-footer-fixed

@@ -1,4 +1,4 @@
-%ul#accordionSidebar.navbar-nav.bg-gradient-primary.sidebar.sidebar-dark.z9999
+%ul#accordionSidebar.navbar-nav.bg-gradient-primary.sidebar.sidebar-dark.z1{class: "#{'position-fixed' unless browser.device.mobile?}"}
   %a.sidebar-brand.d-flex.align-items-center.justify-content-center{href: root_path}
     .sidebar-brand-icon
       %i.fas.fa-home
@@ -9,41 +9,49 @@
     %a.nav-link{href: root_path}
       %i.fas.fa-fw.fa-tachometer-alt
       %span Dashboard
-  %hr.sidebar-divider.my-0
-  %li.nav-item{class: "#{current_path admin_customers_path}"}
-    %a.nav-link{href: admin_customers_path}
-      %i.fas.fa-fw.fa-users
-      %span Khách Hàng
+  - if MenuPolicy.show_customer?
+    %hr.sidebar-divider.my-0
+    %li.nav-item{class: "#{current_path admin_customers_path}"}
+      %a.nav-link{href: admin_customers_path}
+        %i.fas.fa-fw.fa-users
+        %span Khách Hàng
   %li.nav-item{class: "#{current_path admin_investors_path, admin_constructors_path, admin_developments_path, admin_operators_path }"}
     %a.nav-link.collapsed{"aria-controls" => "collapseTwo", "aria-expanded" => "true", "data-target" => "#collapseTwo", "data-toggle" => "collapse", :href => "#"}
       %i.fas.fa-fw.fa-cog
       %span Đối tác
     #collapseTwo.collapse{"aria-labelledby" => "headingTwo", "data-parent" => "#accordionSidebar", class: "#{nav_item_show admin_investors_path, admin_constructors_path, admin_developments_path, admin_operators_path }"}
-      .bg-white.py-2.collapse-inner.rounded
-        %a.collapse-item{{class: "#{current_path admin_investors_path}"}, href: admin_investors_path}
-          %i.fas.fa-fw.fa-user-tie{style: 'position: relative; bottom: 1px'}
-          %span Chủ đầu tư
-        %a.collapse-item{{class: "#{current_path admin_constructors_path}"}, href: admin_constructors_path}
-          %i.fas.fa-fw.fa-industry{style: 'position: relative; bottom: 1px'}
-          %span Tổng thầu
-        %a.collapse-item{{class: "#{current_path admin_developments_path}"}, href: admin_developments_path}
-          %i.fas.fa-fw.fa-users-cog{style: 'position: relative; bottom: 1px'}
-          %span Đơn vị phát triển
-        %a.collapse-item{{class: "#{current_path admin_operators_path}"}, href: admin_operators_path}
-          %i.fas.fa-fw.fa-portrait{style: 'position: relative; bottom: 1px'}
-          %span Đơn vị quản lý
-  %li.nav-item{class: "#{current_path admin_projects_path}"}
-    %a.nav-link{href: admin_projects_path}
-      %i.fas.fa-fw.fa-city{style: 'position: relative; bottom: 1px'}
-      %span Dự án
-  %li.nav-item
-    %a.nav-link{href: '#'}
-      %i.fa.fa-fw.fa-wpforms{style: 'font-size: medium'}
-      %span Giao dịch
-  %li.nav-item
-    %a.nav-link{href: '#'}
-      %i.fa.fa-fw.fa-user
-      %span Tài khoản
+      .bg-gp-primary.py-2.collapse-inner.rounded
+        - if MenuPolicy.show_investor?
+          %a.collapse-item{{class: "#{current_path admin_investors_path}"}, href: admin_investors_path}
+            %i.fas.fa-fw.fa-user-tie{style: 'position: relative; bottom: 1px'}
+            %span Chủ đầu tư
+        - if MenuPolicy.show_constructor?
+          %a.collapse-item{{class: "#{current_path admin_constructors_path}"}, href: admin_constructors_path}
+            %i.fas.fa-fw.fa-industry{style: 'position: relative; bottom: 1px'}
+            %span Tổng thầu
+        - if MenuPolicy.show_development?
+          %a.collapse-item{{class: "#{current_path admin_developments_path}"}, href: admin_developments_path}
+            %i.fas.fa-fw.fa-users-cog{style: 'position: relative; bottom: 1px'}
+            %span Đơn vị phát triển
+        - if MenuPolicy.show_operator?
+          %a.collapse-item{{class: "#{current_path admin_operators_path}"}, href: admin_operators_path}
+            %i.fas.fa-fw.fa-portrait{style: 'position: relative; bottom: 1px'}
+            %span Đơn vị quản lý
+  - if policy(:project).index?
+    %li.nav-item{class: "#{current_path admin_projects_path}"}
+      %a.nav-link{href: admin_projects_path}
+        %i.fas.fa-fw.fa-city{style: 'position: relative; bottom: 1px'}
+        %span Dự án
+  - if MenuPolicy.show_user?
+    %li.nav-item{{class: "#{current_path admin_users_path}"}, href: admin_users_path}
+      %a.nav-link{href: admin_users_path}
+        %i.fa.fa-fw.fa-user
+        %span Tài khoản
+  - if current_user.super_admin?
+    %li.nav-item{{class: "#{current_path admin_roles_path}"}, href: admin_users_path}
+      %a.nav-link{href: admin_roles_path}
+        %i.fas.fa-fw.fa-bacon{style: 'position: relative; bottom: 1px'}
+        %span Phân quyền
   %hr.sidebar-divider.d-none.d-md-block
   .text-center.d-none.d-md-inline
     %button#sidebarToggle.rounded-circle.border-0

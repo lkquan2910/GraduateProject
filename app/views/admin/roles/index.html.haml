@@ -1,0 +1,29 @@
+- content_for :content_header do
+  .d-sm-flex.justify-content-between.mb-4
+    .col-sm-6
+      %h1.h3.mb-0.text-gray-800 Phân quyền
+- content_for :content_body do
+  .card
+    .card-body
+      .table-responsive.p-0
+        %table.table.text-nowrap.table-hover
+          %thead
+            %tr
+              %th Tên
+              %th
+          %tbody
+            - @roles.each do |role|
+              %tr
+                %td.align-middle= role.name
+                %td.align-middle.text-right
+                  %a.btn.btn-outline-primary.btn-edit{href: edit_admin_role_path(role.id)}
+                    %i.fas.fa-pencil-alt
+                  %a.btn.btn-outline-primary{href: admin_role_path(role.id), data: {method: 'delete', confirm: 'Bạn chắc chắn muốn xóa bản ghi này?'}}
+                    %i.fas.fa-trash
+      = render partial: 'shared/pagination', locals: { pagy: @pagy }
+
+- content_for :content_footer do
+  %footer.main-footer.main-footer-fixed
+    .row
+      .col-12
+        = link_to 'Tạo mới', new_admin_role_path, class: 'btn btn-primary'

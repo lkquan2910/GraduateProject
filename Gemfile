@@ -131,3 +131,5 @@ gem 'whenever'
 gem 'paranoia'
 # Google Sheet API
 gem 'google_drive'
+# Detect browser
+gem 'browser'

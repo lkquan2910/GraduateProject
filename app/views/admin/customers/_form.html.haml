@@ -2,7 +2,7 @@
   .col
     = form_with model: [:admin, @customer], local: true, class: 'form-customer' do |f|
       - unless @is_disabled
-        .row
+        .row.sticky-top.z1
           .col
             .card.mb-3
               .card-body
@@ -13,9 +13,9 @@
           .row
             .col
               .card.shadow.mb-4
-                %a.d-block.card-header.py-3{"aria-controls" => "collapseCardExample", "aria-expanded" => "true", "data-toggle" => "collapse", :href => "#collapseCardExample", :role => "button"}
+                %a.d-block.card-header.py-3{"aria-controls" => "collapseCardExample", "aria-expanded" => "true", "data-toggle" => "collapse", :href => "#collapseCardExampleCustomer1", :role => "button"}
                   %h5.m-0.font-weight-bold.text-primary Thông tin khách hàng
-                #collapseCardExample.collapse.show
+                #collapseCardExampleCustomer1.collapse.show
                   .card-body
                     .gp-field-group
                       .gp-field-group-body
@@ -71,9 +71,9 @@
                               = f.text_field :state, class: 'form-control', disabled: true, value: f.object.get_state
             .col
               .card.shadow.mb-4
-                %a.d-block.card-header.py-3{"aria-controls" => "collapseCardExample1", "aria-expanded" => "true", "data-toggle" => "collapse", :href => "#collapseCardExample1", :role => "button"}
+                %a.d-block.card-header.py-3{"aria-controls" => "collapseCardExample1", "aria-expanded" => "true", "data-toggle" => "collapse", :href => "#collapseCardExampleCustomer2", :role => "button"}
                   %h5.m-0.font-weight-bold.text-primary Thông tin thêm
-                #collapseCardExample1.collapse.show
+                #collapseCardExampleCustomer2.collapse.show
                   .card-body
                     .gp-field-group
                       .gp-field-group-body
@@ -107,9 +107,9 @@
                               = f.label :marital_status, 'Tình trạng hôn nhân'
                               = f.select :marital_status, options_for_select(Constant::CUSTOMER_MARITAL_STATUS.invert, @customer.marital_status), {include_blank: "Vui lòng chọn"}, {class: 'form-control gp-select2', disabled: @is_disabled}
               .card.shadow.mb-4
-                %a.d-block.card-header.py-3{"aria-controls" => "collapseCardExample2", "aria-expanded" => "true", "data-toggle" => "collapse", :href => "#collapseCardExample2", :role => "button"}
+                %a.d-block.card-header.py-3{"aria-controls" => "collapseCardExampleCustomer3", "aria-expanded" => "true", "data-toggle" => "collapse", :href => "#collapseCardExampleCustomer3", :role => "button"}
                   %h5.m-0.font-weight-bold.text-primary Ghi chú
-                #collapseCardExample2.collapse.show
+                #collapseCardExampleCustomer3.collapse.show
                   .card-body
                     #notes
                       = f.fields_for :notes do |note|

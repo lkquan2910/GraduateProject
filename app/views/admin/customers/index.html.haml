@@ -7,15 +7,9 @@
     .col
       .card
         .card-body
-          -#%form.mr-auto.my-2.my-md-0.mw-100.navbar-search
-          -#  .input-group
-          -#    %input.form-control.bg-light.border-0.small{"aria-describedby" => "basic-addon2", "aria-label" => "Search", :placeholder => "Search for...", :type => "text"}/
-          -#    .input-group-append
-          -#      %button.btn.btn-primary{:type => "button"}
-          -#        %i.fas.fa-search.fa-sm
           = form_with url: admin_customers_path, method: :get, local: true, class: 'mr-auto my-2 my-md-0 mw-100 navbar-search' do |f|
             .input-group
-              = f.text_field :query, value: params[:query], id: 'customer-search', class: 'form-control typeahead bg-light border-0 small', type: 'search', "aria-label" => "Search", placeholder: 'Tìm kiếm theo: Tên/SĐT'
+              = f.text_field :query, value: params[:query], id: 'customer-search', class: 'form-control typeahead bg-light border-0 small', type: 'search', "aria-label" => "Search", placeholder: 'Tìm kiếm...'
               .input-group-append
                 %button.btn.btn-primary{:type => "submit"}
                   %i.fas.fa-search.fa-sm
@@ -48,16 +42,12 @@
                 %td.align-middle.text-right
                   %a.btn.btn-outline-primary.btn-edit{href: edit_admin_customer_path(customer.id)}
                     %i.fas.fa-pencil-alt
-                  -#- if policy(customer).destroy?
-                  %a.btn.btn-outline-primary{href: admin_customer_path(customer.id), data: {method: 'delete', confirm: 'Bạn chắc chắn muốn xóa bản ghi này?'}}
-                    %i.fas.fa-trash
+                  - if policy(customer).destroy?
+                    %a.btn.btn-outline-primary{href: admin_customer_path(customer.id), data: {method: 'delete', confirm: 'Bạn chắc chắn muốn xóa bản ghi này?'}}
+                      %i.fas.fa-trash
             .row
               .col-6
                 = render partial: 'shared/pagination', locals: { pagy: @pagy }
-              .col-6
-                %a.btn.btn-gp-import
-                  %i.fas.fa-cloud-upload-alt.mr-1
-                  %span Import
 
 - content_for :content_footer do
   %footer.main-footer.main-footer-fixed

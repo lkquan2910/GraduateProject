@@ -1,0 +1,64 @@
+- content_for :content_header do
+  .col-sm-6
+    %h2.m-0.text-dark Chi tiết Phân quyền
+  .col-sm-12.mt-2
+    %a.main-header--back{href: admin_roles_path}
+      %i.fas.fa-chevron-left
+        Trở lại danh sách
+
+- content_for :content_body do
+  .row
+    .col-12
+      .card.tms-card
+        .card-header
+          %h3.card-title Thông tin chính
+          .card-tools
+            %button.btn.btn-tool{type: 'button', data: {card_widget: 'collapse'}}
+              %i.fas.fa-minus
+        .card-body
+          .tms-field-group
+            .tms-field-group-body
+              .row
+                .col
+                  .form-group
+                    %label Tên
+                    %input.form-control{disabled: true, value: @role.name}
+              .row
+                .col
+                  .form-group
+                    %table.table
+                      %thead
+                        %tr
+                          %th(scope="col") Model Name
+                          %th(scope="col") Can create
+                          %th(scope="col") Can Edit
+                          %th(scope="col") Can Edit Other
+                          %th(scope="col") Can View
+                          %th(scope="col") Can View Other
+                          %th(scope="col") Can Delete
+                          %th(scope="col") Can Delete Other
+                          %th(scope="col") Can Import
+                          %th(scope="col") Change state
+                      %tbody
+                        - @role.permissions.order(:name).each do |permission|
+                          %tr
+                            %td
+                              = permission.name
+                            %td
+                              = check_box_tag :can_create, '', permission.can_create, readonly: true
+                            %td
+                              = check_box_tag :can_edit, '', permission.can_edit, readonly: true
+                            %td
+                              = check_box_tag :can_edit_other, '', permission.can_edit_other, readonly: true
+                            %td
+                              = check_box_tag :can_view, '', permission.can_view, readonly: true
+                            %td
+                              = check_box_tag :can_view_other, '', permission.can_view_other, readonly: true
+                            %td
+                              = check_box_tag :can_delete, '', permission.can_delete, readonly: true
+                            %td
+                              = check_box_tag :can_delete_other, '', permission.can_delete_other, readonly: true
+                            %td
+                              = check_box_tag :can_import, '', permission.can_import, readonly: true
+                            %td
+                              = check_box_tag :change_state, '', permission.change_state, readonly: true

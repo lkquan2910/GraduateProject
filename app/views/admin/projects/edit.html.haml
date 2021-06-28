@@ -1,7 +1,25 @@
-%h1 Editing admin_project
+- content_for :content_header do
+  .col-sm-6
+    %h2.text-gray-800 Chỉnh sửa dự án
+  .col-sm-12.mt-2
+    %a.main-header--back{href: admin_projects_path}
+      %i.fas.fa-chevron-left
+        Trở lại danh sách
 
-= render 'form'
-
-= link_to 'Show', @admin_project
-\|
-= link_to 'Back', admin_projects_path
+- content_for :content_body do
+  .card
+    %ul.nav.nav-tabs{role: "tablist"}
+      %li.nav-item
+        %a#project-info-tab.nav-link.active{"aria-controls" => "project-info", "aria-selected" => "true", "data-toggle" => "pill", href: "#project-info", role: "tab"} Thông tin chung
+      %li.nav-item
+        = link_to 'Bảng hàng', admin_project_products_path(@project, level: 0), class: 'nav-link'
+      -#%li.nav-item
+      -#  = link_to 'Mặt bằng', admin_project_layouts_path(@project), class: 'nav-link'
+      -#%li.nav-item
+      -#  = link_to 'Tuỳ chỉnh chi tiết dự án', admin_project_custom_details_path(@project), class: 'nav-link'
+      -#%li.nav-item
+      -#  = link_to 'Interactive Layout', admin_project_interactive_layouts_path(@project), class: 'nav-link'
+    .card-body
+      .tab-content
+        #project-info.tab-pane.fade.show.active{"aria-labelledby" => "project-info-tab", role: "tabpanel"}
+          = render 'form'

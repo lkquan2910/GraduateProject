@@ -58,6 +58,7 @@ GEM
     bindex (0.8.1)
     bootsnap (1.5.1)
       msgpack (~> 1.0)
+    browser (5.3.1)
     builder (3.2.4)
     bullet (6.1.0)
       activesupport (>= 3.0.0)
@@ -480,6 +481,7 @@ DEPENDENCIES
   ancestry
   bcrypt_pbkdf (>= 1.0, < 2.0)
   bootsnap (>= 1.1.0)
+  browser
   bullet
   capistrano
   capistrano-bundler

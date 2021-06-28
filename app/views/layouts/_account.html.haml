@@ -2,18 +2,11 @@
   %a#userDropdown.nav-link.dropdown-toggle{"aria-expanded" => "false", "aria-haspopup" => "true", "data-toggle" => "dropdown", :href => "#", :role => "button"}
     %span.mr-2.d-none.d-lg-inline.text-gray-600= current_user.full_name
   / Dropdown - User Information
-  .dropdown-menu.dropdown-menu-right.shadow.animated--grow-in{"aria-labelledby" => "userDropdown"}
-    %a.dropdown-item{:href => "#"}
+  .dropdown-menu.dropdown-menu-right.shadow.animated--grow-in{"aria-labelledby" => "userDropdown", style: 'height: 86px'}
+    %a.dropdown-item{:href => user_profile_path, style: 'height: 34px'}
       %i.fas.fa-user.fa-sm.fa-fw.mr-2.text-gray-400
       Thông tin cá nhân
-    %a.dropdown-item{:href => "#"}
-      %i.fas.fa-cogs.fa-sm.fa-fw.mr-2.text-gray-400
-      Cài đặt
-    %a.dropdown-item{:href => "#"}
-      %i.fas.fa-list.fa-sm.fa-fw.mr-2.text-gray-400
-      Lịch sử hoạt động
-    .dropdown-divider
-    %a.dropdown-item{"data-target" => "#logoutModal", "data-toggle" => "modal", href: ""}
+    %a.dropdown-item{"data-target" => "#logoutModal", "data-toggle" => "modal", href: "", style: 'height: 34px'}
       %i.fas.fa-sign-out-alt.fa-sm.fa-fw.mr-2.text-gray-400
       Đăng xuất
 #logoutModal.modal.fade{"aria-hidden" => "true", "aria-labelledby" => "exampleModalLabel", :role => "dialog", :tabindex => "-1"}

@@ -1,10 +1,327 @@
-= form_for @admin_project do |f|
-  - if @admin_project.errors.any?
-    #error_explanation
-      %h2= "#{pluralize(@admin_project.errors.count, "error")} prohibited this admin_project from being saved:"
-      %ul
-        - @admin_project.errors.full_messages.each do |message|
-          %li= message
+.row
+  .col
+    = form_with model: [:admin, @project], local: true, id: 'project-submit-form', class: 'form-has-currency' do |f|
+      - unless @is_disabled
+        .row.sticky-top.z1
+          .col
+            .card.mb-3
+              .card-body
+                .float-right
+                  %button.btn.btn-danger.button-save= @project.new_record? ? 'Lưu' : 'Lưu thay đổi'
+      .card
+        .card-body
+          .row
+            .col
+              .card.shadow.mb-4
+                %a.d-block.card-header.py-3{"aria-controls" => "collapseCardExampleProject1", "aria-expanded" => "true", "data-toggle" => "collapse", :href => "#collapseCardExampleProject1", :role => "button"}
+                  %h5.m-0.font-weight-bold.text-primary Thông tin dự án
+                #collapseCardExampleProject1.collapse.show
+                  .card-body
+                    .gp-field-group{style: 'margin-bottom: 16px'}
+                      .gp-field-group-header
+                        %span.text-primary Thông tin chung
+                      .gp-field-group-body
+                        .row
+                          .col
+                            .form-group
+                              = f.label :name do
+                                Tên dự án
+                                %span.required
+                                  *
+                              = f.text_field :name, class: 'form-control', disabled: @is_disabled
+                              - f.object.errors.messages[:name].each do |name_error|
+                                %span.invalid-feedback.custom-validation= name_error
+                            .form-group
+                              = f.label :real_estate_type  do
+                                Loại hình BĐS
+                                %span.required
+                                  *
+                              = f.select :real_estate_type, options_for_select(Constant::PROJECT_REAL_ESTATE_TYPE.invert, @project.real_estate_type), {include_hidden: false}, { class: 'gp-select2 form-control', multiple: true, disabled: @is_disabled }
+                              - f.object.errors.messages[:real_estate_type].each do |real_estate_type_error|
+                                %span.invalid-feedback.custom-validation= real_estate_type_error
+                            .form-group
+                              = f.label :locking_time do
+                                Thời gian lock căn (phút)
+                              = f.text_field :locking_time, class: 'form-control', disabled: @is_disabled
+                              - f.object.errors.messages[:locking_time].each do |locking_time_error|
+                                %span.invalid-feedback.custom-validation= locking_time_error
+                            .form-group
+                              = f.label :construction_density, 'Mật độ xây dựng (%)'
+                              = f.text_field :construction_density, class: 'form-control', disabled: @is_disabled
+                              - f.object.errors.messages[:construction_density].each do |construction_density_error|
+                                %span.invalid-feedback.custom-validation= construction_density_error
+                            .form-group
+                              = f.label :total_area, 'Quy mô (ha)'
+                              = f.text_field :total_area, class: 'form-control', disabled: @is_disabled
+                              - f.object.errors.messages[:total_area].each do |total_area_error|
+                                %span.invalid-feedback.custom-validation= total_area_error
+                            = f.fields_for :region do |ff|
+                              .form-group
+                                = ff.label :city_id do
+                                  Tỉnh/Thành phố
+                                  %span.required
+                                    *
+                                = ff.select :city_id, options_for_select(@cities, ff.object.city_id), {include_blank: true}, {class: 'gp-select2 form-control select2-region', id: 'project_regions_attributes_city', data: {'select-child-target': %w(project_regions_attributes_district project_regions_attributes_ward)}, disabled: @is_disabled}
+                                - ff.object.errors.messages[:city_id].each do |city_id_error|
+                                  %span.invalid-feedback.custom-validation= city_id_error
+                              .form-group
+                                = ff.label :district_id do
+                                  Quận/Huyện
+                                  %span.required
+                                    *
+                                = ff.select :district_id, options_for_select(@district_children, ff.object.district_id), {include_blank: ""}, {class: 'form-control gp-select2 select2-region', id: 'project_regions_attributes_district', data: {'select-child-target': ['project_regions_attributes_ward']}, disabled: @is_disabled}
+                                - ff.object.errors.messages[:district_id].each do |district_id_error|
+                                  %span.invalid-feedback.custom-validation= district_id_error
+                              .form-group
+                                = ff.label :ward_id, 'Xã/Phường'
+                                = ff.select :ward_id, options_for_select(@ward_children, ff.object.ward_id), {include_blank: ""}, {class: 'form-control gp-select2 select2-region', id: 'project_regions_attributes_ward', data: {'select-child-target': ['project_regions_attributes_street']}, disabled: @is_disabled}
+                              .form-group
+                                = ff.label :street, 'Đường/Phố'
+                                = ff.text_area :street, class: 'form-control', disabled: @is_disabled
+                            .form-group
+                              = f.label :investors do
+                                Chủ đầu tư
+                                %span.required
+                                  *
+                              = f.select :investors, options_for_select(@investors, @project.investors), {include_hidden: false}, { class: 'gp-select2 form-control', multiple: true, disabled: @is_disabled }
+                              - f.object.errors.messages[:investors].each do |investors_error|
+                                %span.invalid-feedback.custom-validation= investors_error
+                            .form-group
+                              = f.label :constructors, 'Tổng thầu'
+                              = f.select :constructors, options_for_select(@constructors, @project.constructors), {include_hidden: false}, { class: 'gp-select2 form-control', multiple: true, disabled: @is_disabled }
+                            .form-group
+                              = f.label :developments, 'Đơn vị phát triển'
+                              = f.select :developments, options_for_select(@developments, @project.developments), {include_hidden: false}, { class: 'gp-select2 form-control', multiple: true, disabled: @is_disabled }
+                            .form-group
+                              = f.label :operators, 'Đơn vị quản lý'
+                              = f.select :operators, options_for_select(@operators, @project.operators), {include_hidden: false}, { class: 'gp-select2 form-control', multiple: true, disabled: @is_disabled }
+                            .form-group
+                              = f.label :features, 'Đặc tính dự án'
+                              = f.select :features, options_for_select(Constant::PROJECT_FEATURES.invert, @project.features), {include_hidden: true}, { class: 'gp-select2 form-control', multiple: true, disabled: @is_disabled }
+                            .form-group
+                              = f.label :description, 'Mô tả dự án'
+                              = f.text_area :description, class: 'form-control', disabled: @is_disabled
+                        .row
+                          .col-6
+                            .form-group
+                              = f.label :price_from, 'Giá nhỏ nhất (Tỷ)'
+                              = f.number_field :price_from, class: 'form-control', step: :any, disabled: @is_disabled
+                              - f.object.errors.messages[:price_from].each do |price_from|
+                                %span.invalid-feedback.custom-validation= price_from
+                          .col-6
+                            .form-group
+                              = f.label :price_to, 'Giá lớn nhất (Tỷ)'
+                              = f.number_field :price_to, class: 'form-control', step: :any, disabled: @is_disabled
+                              - f.object.errors.messages[:price_to].each do |price_to|
+                                %span.invalid-feedback.custom-validation= price_to
+                        .row
+                          .col-6
+                            .form-group
+                              = f.label :area_from, 'Diện tích nhỏ nhất'
+                              = f.number_field :area_from, class: 'form-control', step: :any, disabled: @is_disabled
+                              - f.object.errors.messages[:area_from].each do |area_from|
+                                %span.invalid-feedback.custom-validation= area_from
+                          .col-6
+                            .form-group
+                              = f.label :area_to, 'Diện tích lớn nhất'
+                              = f.number_field :area_to, class: 'form-control', step: :any, disabled: @is_disabled
+                              - f.object.errors.messages[:area_to].each do |area_to|
+                                %span.invalid-feedback.custom-validation= area_to
 
-  .actions
-    = f.submit 'Save'
+                    .gp-field-group
+                      .gp-field-group-header
+                        %span
+                          Hình ảnh
+                          %span.required
+                            *
+                      .gp-field-group-body
+                        - @project.images.each_with_index do |image, index|
+                          = hidden_field :project, :images, multiple: true, value: image.identifier, class: 'images-item', 'data-url': image.url, 'data-delete-url': @project.new_record? ? '' : destroy_attachment_admin_project_path(@project)
+                        = f.hidden_field :images_cache
+                        .row
+                          .col.form-group
+                            .file-loading
+                              = f.file_field :images, multiple: true, id: 'project-images-input', 'data-browse-on-zone-click': true, 'data-show-upload': false, 'data-show-caption': true, 'data-msg-placeholder': 'Chọn file', disabled: @is_disabled
+                              - f.object.errors.messages[:images].each do |image_error|
+                                %span.invalid-feedback.custom-validation= image_error
+                    .gp-field-group
+                      .gp-field-group-header
+                        %span
+                          Hình ảnh mặt bằng
+                          %span.required
+                            *
+                      .gp-field-group-body
+                        - @project.floorplan_images.each do |floorplan_image|
+                          = hidden_field :project, :floorplan_images, multiple: true, value: floorplan_image.identifier, class: 'floorplan-images-item', 'data-url': floorplan_image.url, 'data-delete-url': @project.new_record? ? '' : destroy_attachment_admin_project_path(@project)
+                        = f.hidden_field :floorplan_images_cache
+                        .row
+                          .col.form-group
+                            = f.file_field :floorplan_images, multiple: true, id: 'floorplan-images-input', 'data-browse-on-zone-click': true, 'data-show-upload': false, 'data-show-caption': true, 'data-msg-placeholder': 'Chọn file', disabled: @is_disabled
+                            - f.object.errors.messages[:floorplan_images].each do |floorplan_image_error|
+                              %span.invalid-feedback.custom-validation= floorplan_image_error
+            .col
+              .card.shadow.mb-4
+                %a.d-block.card-header.py-3{"aria-controls" => "collapseCardExampleProject2", "aria-expanded" => "true", "data-toggle" => "collapse", :href => "#collapseCardExampleProject2", :role => "button"}
+                  %h5.m-0.font-weight-bold.text-primary Tiện ích
+                #collapseCardExampleProject2.collapse.show
+                  .card-body
+                    .gp-field-group{style: 'margin-bottom: 16px'}
+                      .gp-field-group-body
+                        .row
+                          .col
+                            .form-group
+                              = f.label :internal_utilities do
+                                Tiện ích nội khu
+                                %span.required
+                                  *
+                              = f.select :internal_utilities, options_for_select(Constant::PROJECT_INTERNAL_UTILITIES.invert, @project.internal_utilities), {include_hidden: false}, { class: 'gp-select2 form-control', multiple: true, disabled: @is_disabled }
+                              - f.object.errors.messages[:internal_utilities].each do |internal_utilities_error|
+                                %span.invalid-feedback.custom-validation= internal_utilities_error
+                            .form-group
+                              = f.label :external_utilities, 'Tiện ích ngoại khu'
+                              = f.text_area :external_utilities, class: 'form-control', disabled: @is_disabled
+              .card.shadow.mb-4
+                %a.d-block.card-header.py-3{"aria-controls" => "collapseCardExampleProject3", "aria-expanded" => "true", "data-toggle" => "collapse", :href => "#collapseCardExampleProject3", :role => "button"}
+                  %h5.m-0.font-weight-bold.text-primary Pháp lý dự án
+                #collapseCardExampleProject3.collapse.show
+                  .card-body
+                    .gp-field-group{style: 'margin-bottom: 16px'}
+                      .gp-field-group-body
+                        .row
+                          .col
+                            .form-group
+                              = f.label :ownership_period do
+                                Thời hạn sở hữu
+                                %span.required
+                                  *
+                              = f.select :ownership_period, options_for_select(Constant::PROJECT_OWNERSHIP_PERIOD.invert, @project.ownership_period), {include_blank: true}, { class: 'gp-select2 form-control', disabled: @is_disabled }
+                              - f.object.errors.messages[:ownership_period].each do |ownership_period_error|
+                                %span.invalid-feedback.custom-validation= ownership_period_error
+                            .form-group
+                              = f.label :foreigner, 'Người nước ngoài'
+                              .row
+                                .col
+                                  = f.radio_button :foreigner, true, class: 'gp-icheck', data: {skin: 'square', color: 'red'}, disabled: @is_disabled
+                                  Có
+                              .row.mt-2
+                                .col
+                                  = f.radio_button :foreigner, false, class: 'gp-icheck', data: {skin: 'square', color: 'red'}, disabled: @is_disabled
+                                  Không
+                    .gp-field-group
+                      .gp-field-group-header
+                        %span Tài liệu pháp lý
+                      .gp-field-group-body
+                        #legal-documents
+                          = f.fields_for :legal_documents do |doc|
+                            = render 'legal_document_fields', f: doc
+                          .links
+                            = link_to_add_association f, :legal_documents do
+                              %button.btn.btn-primary{type: 'button', disabled: @is_disabled}
+                                %i.fas.fa-plus
+                                Thêm tài liệu
+              .card.shadow.mb-4
+                %a.d-block.card-header.py-3{"aria-controls" => "collapseCardExampleProject4", "aria-expanded" => "true", "data-toggle" => "collapse", :href => "#collapseCardExampleProject4", :role => "button"}
+                  %h5.m-0.font-weight-bold.text-primary Tiến độ dự án
+                #collapseCardExampleProject4.collapse.show
+                  .card-body
+                    #milestones
+                      = f.fields_for :milestones do |milestone|
+                        = render 'milestone_fields', f: milestone
+                      .links
+                        = link_to_add_association f, :milestones do
+                          %button.btn.btn-primary{type: 'button', disabled: @is_disabled}
+                            %i.fas.fa-plus
+                            Thêm mốc thời gian
+
+              .card.shadow.mb-4
+                %a.d-block.card-header.py-3{"aria-controls" => "collapseCardExampleProject5", "aria-expanded" => "true", "data-toggle" => "collapse", :href => "#collapseCardExampleProject5", :role => "button"}
+                  %h5.m-0.font-weight-bold.text-primary Chính sách bán hàng
+                #collapseCardExampleProject5.collapse.show
+                  .card-body
+                    .gp-field-group{style: 'margin-bottom: 16px'}
+                      .gp-field-group-body
+                        .row
+                          .col
+                            .form-group
+                              = hidden_field :project, :sale_policy, value: @project.sale_policy.identifier, 'data-url': @project.sale_policy.url, 'data-delete-url': !@project.new_record? && @project.sale_policy.present? ? destroy_attachment_admin_project_path(@project) : ''
+                              = f.file_field :sale_policy, id: 'sale-policy-input', 'data-browse-on-zone-click': true, 'data-show-upload': false, 'data-show-caption': true, 'data-msg-placeholder': 'Chọn file', disabled: @is_disabled
+                              = f.hidden_field :sale_policy_cache
+                    .gp-field-group
+                      .gp-field-group-header
+                        %span Chính sách thanh toán khối Cao tầng
+                      .gp-field-group-body
+                        .form-group
+                          = f.label :high_level_number, 'Số đợt thanh toán'
+                          = f.text_field :high_level_number, class: 'form-control', disabled: @is_disabled
+                          - f.object.errors.messages[:high_level_number].each do |high_level_number_error|
+                            %span.invalid-feedback.custom-validation= high_level_number_error
+                          - f.object.errors.messages[:high_payment_schedule].each do |high_payment_schedule_error|
+                            %span.invalid-feedback.custom-validation= high_payment_schedule_error
+                        #high-payment-schedules
+                          = f.fields_for :payment_schedules do |payment_schedule|
+                            - if payment_schedule.object.label_schedule.nil? || payment_schedule.object.label_schedule == 0
+                              = render 'payment_schedule_fields', f: payment_schedule
+                          .links
+                            = link_to_add_association f, :payment_schedules do
+                              %button.btn.btn-primary{type: 'button', disabled: @is_disabled}
+                                %i.fas.fa-plus
+                                Thêm tiến độ
+                    .gp-field-group
+                      .gp-field-group-header
+                        %span Chính sách thanh toán khối Thấp tầng
+                      .gp-field-group-body
+                        .form-group
+                          = f.label :low_level_number, 'Số đợt thanh toán'
+                          = f.text_field :low_level_number, class: 'form-control', disabled: @is_disabled
+                          - f.object.errors.messages[:low_level_number].each do |low_level_number_error|
+                            %span.invalid-feedback.custom-validation= low_level_number_error
+                          - f.object.errors.messages[:low_payment_schedule].each do |low_payment_schedule_error|
+                            %span.invalid-feedback.custom-validation= low_payment_schedule_error
+                        #low-payment-schedules
+                          = f.fields_for :payment_schedules do |payment_schedule|
+                            - if payment_schedule.object.label_schedule.nil? || payment_schedule.object.label_schedule == 1
+                              = render 'payment_schedule_fields', f: payment_schedule
+                          .links
+                            = link_to_add_association f, :payment_schedules do
+                              %button.btn.btn-primary{type: 'button', disabled: @is_disabled}
+                                %i.fas.fa-plus
+                                Thêm tiến độ
+                    .gp-field-group
+                      .gp-field-group-header
+                        %span Hỗ trợ vay
+                      .gp-field-group-body
+                        .form-group
+                          = f.label :banks, 'Ngân hàng hỗ trợ'
+                          = f.select :banks, options_for_select(Constant::PROJECT_BANK.invert, @project.banks), {include_hidden: false}, { class: 'gp-select2 form-control', multiple: true, disabled: @is_disabled }
+                        .form-group
+                          = f.label :loan_percentage_support, 'Hỗ trợ vay (%)'
+                          = f.text_field :loan_percentage_support, class: 'form-control', disabled: @is_disabled
+                          - f.object.errors.messages[:loan_percentage_support].each do |loan_percentage_support_error|
+                            %span.invalid-feedback.custom-validation= loan_percentage_support_error
+                        .form-group
+                          = f.label :loan_support_period, 'Thời gian hỗ trợ (tháng)'
+                          = f.text_field :loan_support_period, class: 'form-control', disabled: @is_disabled
+                          - f.object.errors.messages[:loan_support_period].each do |loan_support_period_error|
+                            %span.invalid-feedback.custom-validation= loan_support_period_error
+              .card.shadow.mb-4
+                %a.d-block.card-header.py-3{"aria-controls" => "collapseCardExampleProject6", "aria-expanded" => "true", "data-toggle" => "collapse", :href => "#collapseCardExampleProject6", :role => "button"}
+                  %h5.m-0.font-weight-bold.text-primary Phí môi giới
+                #collapseCardExampleProject6.collapse.show
+                  .card-body
+                    .gp-field-group{style: 'margin-bottom: 16px'}
+                      .gp-field-group-body
+                        .form-group
+                          = f.label :commission_type, 'Hình thức tính phí'
+                          = f.select :commission_type, options_for_select(Constant::PROJECT_COMMISSION_TYPE.invert, @project.commission_type), {include_blank: true}, { class: 'gp-select2 form-control', disabled: @is_disabled }
+                          - f.object.errors.messages[:commission_type].each do |commission_type_error|
+                            %span.invalid-feedback.custom-validation= commission_type_error
+                        .form-group
+                          = f.label :commission, 'Hoa hồng (VNĐ)'
+                          = f.text_field :commission, class: 'form-control', 'data-type': "#{f.object.commission_type == 0 ? 'currency' : 'number'}", disabled: @is_disabled
+                          - f.object.errors.messages[:commission].each do |commission_error|
+                            %span.invalid-feedback.custom-validation= commission_error
+                        .form-group
+                          = f.label :bonus, 'Thưởng nóng (VNĐ)'
+                          = f.text_field :bonus, class: 'form-control', 'data-type': "#{f.object.commission_type == 0 ? 'currency' : 'number'}", disabled: @is_disabled
+                          - f.object.errors.messages[:bonus].each do |bonus_error|
+                            %span.invalid-feedback.custom-validation= bonus_error
