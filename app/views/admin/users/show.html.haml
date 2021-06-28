@@ -1,0 +1,37 @@
+- content_for :content_header do
+  .col-sm-6
+    %h2.m-0.text-dark Chi tiết Tài Khoản
+  .col-sm-12.mt-2
+    %a.main-header--back{href: admin_users_path}
+      %i.fas.fa-chevron-left
+        Trở lại danh sách
+
+- content_for :content_body do
+  .row
+    .col-6
+      .card.shadow.mb-4
+        %a.d-block.card-header.py-3{"aria-controls" => "collapseCardExampleconstructor", "aria-expanded" => "true", "data-toggle" => "collapse", :href => "#collapseCardExampleconstructor", :role => "button"}
+          %h5.m-0.font-weight-bold.text-primary Thông tin chính
+        #collapseCardExampleconstructor.collapse.show
+        .card-body
+          .gp-field-group
+            .gp-field-group-body
+              .form-group
+
+          = form_with(model: [:admin, @user]) do |f|
+            .form-group
+              %label{for: 'email'} Email
+              .field
+                = f.email_field :email, class: 'form-control', required: true, disabled: true
+            .form-group
+              %label{for: 'name'} Tên
+              .field
+                = f.text_field :full_name, class: 'form-control', required: true, disabled: true
+            .form-group
+              %label{for: 'account_type'} Account Type
+              .field
+                = f.select :account_type, options_for_select(User.account_types.keys.map { |w| [w.humanize, w] }, @user.account_type), {include_blank: true}, class: 'gp-select2 form-control', disabled: true
+            .form-group
+              %label{for: 'role_id'} Role
+              .field
+                = f.select :role_id, options_for_select(Role.all.map { |w| [w.name.humanize, w.id] }, @user.role_id), {include_blank: true}, class: 'gp-select2 form-control', disabled: true

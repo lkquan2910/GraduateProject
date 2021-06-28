@@ -1,0 +1,29 @@
+- content_for :content_header do
+  .col-sm-6
+    %h2.m-0.text-dark Chỉnh sửa dự án
+  .col-sm-12.mt-2
+    %a.main-header--back{href: admin_projects_path}
+      %i.fas.fa-chevron-left
+        Trở lại danh sách
+
+- content_for :content_body do
+  .card.tms-card
+    %ul.nav.nav-tabs{role: "tablist"}
+      %li.nav-item
+        = link_to 'Thông tin chung', edit_admin_project_path(@project), class: 'nav-link'
+      %li.nav-item
+        %a#product-info-tab.nav-link.active{"aria-controls" => "product-info", "aria-selected" => "false", "data-toggle" => "pill", href: "#product-info", role: "tab"} Bảng hàng
+      -#%li.nav-item
+      -#  = link_to 'Mặt bằng', admin_project_layouts_path(@project), class: 'nav-link'
+      -#%li.nav-item
+      -#  = link_to 'Tuỳ chỉnh chi tiết dự án', admin_project_custom_details_path(@project), class: 'nav-link'
+      -#%li.nav-item
+      -#  = link_to 'Interactive Layout', admin_project_interactive_layouts_path(@project), class: 'nav-link'
+    .card-body
+      .tab-content
+        %h4 Tạo mới sản phẩm
+        %a.main-header--back.division-static-path{href: admin_project_products_path(@project)}
+          %i.fas.fa-chevron-left
+            Trở lại bảng hàng
+        #product-info.tab-pane.fade.show.active{"aria-labelledby" => "product-info-tab", role: "tabpanel"}
+          = render 'form'

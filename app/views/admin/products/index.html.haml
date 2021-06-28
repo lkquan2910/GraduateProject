@@ -1,0 +1,63 @@
+- content_for :content_header do
+  .col-sm-6
+    %h2.m-0.text-dark Chỉnh sửa dự án
+  .col-sm-12.mt-2
+    %a.main-header--back{href: admin_projects_path}
+      %i.fas.fa-chevron-left
+        Trở lại danh sách
+
+- content_for :content_body do
+  .card.gp-card
+    %ul.nav.nav-tabs{role: "tablist"}
+      %li.nav-item
+        = link_to 'Thông tin chung', edit_admin_project_path(@project), class: 'nav-link'
+      %li.nav-item
+        %a#product-info-tab.nav-link.active{"aria-controls" => "product-info", "aria-selected" => "false", "data-toggle" => "pill", href: "#product-info", role: "tab"} Bảng hàng
+    .card-body
+      .tab-content
+        #product-info.tab-pane.fade.show.active{"aria-labelledby" => "product-info-tab", role: "tabpanel"}
+          .row
+            .col
+              .card.shadow.mb-4
+                %a.d-block.card-header.py-3{"aria-controls" => "collapseCardExampleImport", "aria-expanded" => "true", "data-toggle" => "collapse", :href => "#collapseCardExampleImport", :role => "button", style: 'background: #4e73df !important'}
+                  %h5.m-0.text-primary{style: 'color: #ffffff !important'} Import bảng hàng
+                #collapseCardExampleImport.collapse.collapse
+                  .card-body
+                    = render 'import_product_form'
+
+          .card
+            %ul.nav.nav-tabs{role: "tablist"}
+              %li#high.nav-item
+                %a#product-info-tab.nav-link{class: "#{'active' if params[:level].to_s == '0'}", href: admin_project_products_path(@project.id, level: 0), role: "tab"} Cao tầng
+              %li#low.nav-item
+                %a#layout-info-tab.nav-link{class: "#{'active' if params[:level].to_s == '1'}", href: admin_project_products_path(@project.id, level: 1), role: "tab"} Thấp tầng
+            .card-body
+              .tab-content
+                - if params[:level].to_s == '0' || params[:level].blank?
+                  #high-level-product-info.tab-pane.fade{class: "#{'show active' if params[:level].to_s == '0'}", "aria-labelledby" => "high-level-product-info-tab", role: "tabpanel"}
+                    = form_with url: search_admin_project_products_path(@project), method: :get, local: true, class: 'mb-2 mr-auto mt-0 mw-100 navbar-search' do |f|
+                      = f.hidden_field :level, value: 0
+                      .input-group
+                        = f.text_field :high_query, value: params[:high_query], id: 'high-product-search', class: 'form-control typeahead bg-light border-0 small', type: 'search', 'data-url-autocomplete': autocomplete_admin_project_products_url(@project), placeholder: 'Nhập từ khoá tìm kiếm theo: Mã sản phẩm'
+                        .input-group-append
+                          %button.btn.btn-primary{:type => "submit"}
+                            %i.fas.fa-search.fa-sm
+                    = render 'high_level_table'
+                - if params[:level].to_s == '1'
+                  #low-level-product-info.tab-pane.fade{class: "#{'show active' if params[:level].to_s == '1'}", "aria-labelledby" => "low-level-product-info-tab", role: "tabpanel"}
+                    = form_with url: search_admin_project_products_path(@project), method: :get, local: true, class: 'mb-2 mr-auto mt-0 mw-100 navbar-search' do |f|
+                      = f.hidden_field :level, value: 1
+                      .input-group
+                        = f.text_field :low_query, value: params[:low_query], id: 'low-product-search', class: 'form-control typeahead bg-light border-0 small', type: 'search', 'data-url-autocomplete': autocomplete_admin_project_products_url(@project), placeholder: 'Nhập từ khoá tìm kiếm theo: Mã sản phẩm'
+                        .input-group-append
+                          %button.btn.btn-primary{:type => "submit"}
+                            %i.fas.fa-search.fa-sm
+                    = render 'low_level_table'
+
+-#- content_for :content_footer do
+-#  %footer.main-footer.main-footer-fixed
+-#    .row
+-#      .col-12
+-#        %button#new-product.btn.btn-primary Tạo mới
+-#        = link_to 'Cao tầng', new_admin_project_product_path(level: 0), class: 'btn btn-primary invisible new-high-product'
+-#        = link_to 'Thấp tầng', new_admin_project_product_path(level: 1), class: 'btn btn-primary invisible new-low-product'

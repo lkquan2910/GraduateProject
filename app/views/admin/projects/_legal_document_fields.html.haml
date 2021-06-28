@@ -1,0 +1,26 @@
+.nested-fields
+  .row
+    .col-6
+      .form-group
+        .fields
+          = f.label :doc_type do
+            Loại tài liệu
+            %span.required
+              *
+          = f.select :doc_type, options_for_select(Constant::PROJECT_LEGAL_DOCUMENTS.invert, f.object.doc_type), {include_blank: true}, class: 'gp-select2 form-control', disabled: @is_disabled
+          - f.object.errors.messages[:doc_type].each do |doc_type_error|
+            %span.invalid-feedback.custom-validation= doc_type_error
+    .col-5
+      .form-group
+        .fields{class: f.object.errors.messages[:doc].present? ? "field_with_errors" : ''}
+          .custom-file{style: 'margin-top: 31px; cursor: pointer'}
+            = f.file_field :doc, class: 'custom-file-input not_default_error', disabled: @is_disabled
+            = f.hidden_field :doc_cache, value: f.object.doc_cache
+            = f.label :doc, "#{f.object&.doc&.identifier || 'Chọn file'}", { class: 'custom-file-label form-control not_default_error', style: 'overflow: auto' }
+            - f.object.errors.messages[:doc].each do |doc_error|
+              %span.invalid-feedback.custom-validation= doc_error
+    .col-1
+      = link_to_remove_association f do
+        .form-group
+          %button.btn.btn-outline-danger{type: 'button', style: 'margin-top: 31px', disabled: @is_disabled}
+            %i.fas.fa-trash

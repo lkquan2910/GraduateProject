@@ -4,32 +4,36 @@ class Admin::CustomersController < GraduateProjectController
   # GET /admin/customers
   # GET /admin/customers.json
   def index
-    #authorize :customer, :index?
-    #@customers = policy_scope(Customer)
+    authorize :customer, :index?
+    @customers = policy_scope(Customer)
     query = params[:query].presence || "*"
-    @customers = Customer.all
     @pagy, @customers = pagy(@customers.search_result(query), items: Settings.admin.pagination.customer.per_page)
   end
 
   def autocomplete
-    #@customers = policy_scope(Customer)
+    @customers = policy_scope(Customer)
     render json: @customers.autocomplete_result(params[:query])
   end
 
   # GET /admin/customers/1
   # GET /admin/customers/1.json
   def show
+    authorize @customer
+    @customer_characteristic = Constant::CUSTOMER_CUSTOMER_CHARACTERISTIC.values_at(*@customer.customer_characteristic)
+    @customer_notes = @customer.notes
   end
 
   # GET /admin/customers/new
   def new
     @customer = Customer.new
     @cities = RegionData.cities.pluck(:name_with_type, :id)
+    authorize @customer
   end
 
   # GET /admin/customers/1/edit
   def edit
-    #@is_disabled = !policy(@customer).update?
+    authorize @customer
+    @is_disabled = !policy(@customer).update?
     @cities = RegionData.cities.pluck(:name_with_type, :id)
     @customer_notes = @customer.notes
   end
@@ -48,12 +52,13 @@ class Admin::CustomersController < GraduateProjectController
     #  return
     #end
     @cities = RegionData.cities.pluck(:name_with_type, :id)
+    authorize @customer
     respond_to do |format|
       if @customer.save
         format.html { redirect_to edit_admin_customer_path(@customer.id), notice: 'Khách hàng đã được tạo thành công.' }
         format.json { render :edit, status: :created, location: @customer }
       else
-        format.html { render :edit }
+        format.html { render :new }
         format.json { render json: @customer.errors, status: :unprocessable_entity }
       end
     end

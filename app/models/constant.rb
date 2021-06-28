@@ -8,7 +8,7 @@ class Constant < ApplicationRecord
   PROJECT_REAL_ESTATE_TYPE = { 0 => 'Apartel', 1 => 'Căn hộ', 2 => 'Condotel', 3 => 'Duplex', 4 => 'Penthouse', 5 => 'Sky villa',
                                6 => 'Hometel', 7 => 'Officetel', 8 => 'Sàn thương mại', 9 => 'Biệt thự', 10 => 'Bungalow', 11 => 'Đất nền',
                                12 => 'Liền kề', 13 => 'Shophouse', 14 => 'Shoptel', 15 => 'Đất TMDV', 16 => 'Mini Hotel' } # Loại hình BĐS
-  PROJECT_FEATURES = { 0 => 'Mới', 1 => 'Độc quyền', 2 => 'Nổi bật', 3 => 'Giảm giá' } # Đặc tính dự án
+  PROJECT_FEATURES = { 0 => 'Mới', 1 => 'Độc quyền', 2 => 'Nổi bật', 3 => 'Flash sale', 4 => 'Sắp mở bán', 5 => 'Đang mở bán' } # Đặc tính dự án
   PROJECT_INTERNAL_UTILITIES = { 0 => 'Bệnh viện', 1 => 'Trung tâm thương mại', 2 => 'Gym', 3 => 'Spa', 4 => 'Bể bơi',
                                  5 => 'Công viên', 6 => 'Khu vui chơi trẻ em', 7 => 'Trường học', 8 => 'Vườn BBQ',
                                  9 => 'Rạp chiếu phim', 10 => 'Khu vui chơi giải trí' } # Tiện ích nội khu
@@ -27,6 +27,105 @@ class Constant < ApplicationRecord
   PROJECT_COMMISSION_TYPE = { 0 => 'Cố định', 1 => '%' } # Hình thức tính phí môi giới
   PROJECT_LEGAL_DOCUMENTS = { 0 => 'VB Tư cách pháp lý/chứng chỉ hành nghề của CĐT', 1 => 'Quy hoạch chi tiết tỉ lệ 1/500 được phê duyệt', 2 => 'QĐ giao đất/cho thuê đất',
                               3 => 'QĐ phê duyệt chủ trương đầu tư dự án', 4 => 'Giấy tờ về quyền sử dụng đất', 5 => 'Giấy phép xây dựng' } # Pháp lý dự án
+
+  # Constant for Product
+  PRODUCT_LEVELS = {
+      0 => 'Cao tầng',
+      1 => 'Thấp tầng'
+    }
+
+  PRODUCT_DIVISION_TYPES = {
+      0 => 'Phân khu',
+      1 => 'Toà',
+      2 => 'Đường/Dãy',
+      3 => 'Tầng'
+    }
+
+  PRODUCT_REAL_ESTATE_TYPES = {
+      0 => {
+        0 => 'Apartel',
+        1 => 'Căn hộ',
+        2 => 'Condotel',
+        3 => 'Duplex',
+        4 => 'Penthouse',
+        5 => 'Sky villa',
+        6 => 'Hometel',
+        7 => 'Officetel',
+        8 => 'Sàn thương mại'
+      },
+      1 => {
+        9 => 'Biệt thự',
+        10 => 'Bungalow',
+        11 => 'Đất nền',
+        12 => 'Liền kề',
+        13 => 'Shophouse',
+        14 => 'Shoptel',
+        15 => 'Đất TMDV',
+        16 => 'Mini Hotel'
+      }
+    }
+
+  PRODUCT_TYPES = {
+      0 => {
+        0 => '1 PN',
+        1 => '2 PN',
+        2 => '3 PN',
+        3 => '4 PN',
+        4 => 'Studio',
+        5 => 'Không chia phòng'
+      },
+      1 => {
+        6 => 'Đơn lập',
+        7 => 'Song lập',
+        8 => 'Tứ lập'
+      }
+    }
+
+  PRODUCT_DIRECTIONS = {
+      0 => 'Đông',
+      1 => 'Tây',
+      2 => 'Nam',
+      3 => 'Bắc',
+      4 => 'Đông Nam',
+      5 => 'Tây Nam',
+      6 => 'Đông Bắc',
+      7 => 'Tây Bắc'
+    }
+
+  PRODUCT_CERTIFICATES = {
+      0 => 'Sổ hồng',
+      1 => 'Sổ đỏ'
+    }
+
+  PRODUCT_UNITS = {
+      0 => 'Tỷ',
+      1 => 'Triệu',
+      2 => 'Nghìn'
+    }
+
+  PRODUCT_CURRENCIES = {
+      0 => 'VNĐ',
+      1 => 'USD',
+      2 => 'EUR'
+    }
+
+  PRODUCT_USE_TERMS = {
+      0 => '50 năm',
+      1 => '70 năm',
+      2 => 'Lâu dài'
+    }
+
+  PRODUCT_FURNITURES = {
+      0 => 'Thô',
+      1 => 'Đính tường',
+      2 => 'Toàn bộ'
+    }
+
+  PRODUCT_FURN_QUALITIES = {
+      0 => 'Cao cấp',
+      1 => 'Trung cấp',
+      2 => 'Bình dân'
+    }
 
   # Constant for Customer
   CUSTOMER_GENDER = { 0 => 'Nam', 1 => 'Nữ', 2 => 'Khác' }
@@ -83,7 +182,8 @@ class Constant < ApplicationRecord
     'Website & Hoạt động Marketing' => ['Paid Social', 'Social Media', 'Email Marketing', 'Paid Search', 'Organic Search', 'Direct Booking', 'Direct Traffic', 'Other Campaign', 'Referral', 'Display']
   }
 
-  SOURCE_FB = 0
+  SOURCE_FB_MESSENGER = 0
+  SOURCE_FB_COMMENT = 24
   SOURCE_HOTLINE_FB = 1
   SOURCE_HOTLINE_SMS = 2
   SOURCE_TELEMARKETING = 3
@@ -109,7 +209,8 @@ class Constant < ApplicationRecord
   SOURCE_DISPLAY = 23
 
   DEAL_SOURCE_GROUP = {
-    'Nhận khách từ Công ty' => [['Facebook', SOURCE_FB, {'title' => 'KH liên hệ qua trang facebook của công ty'}]],
+    'Nhận khách từ Công ty' => [['Facebook messenger', SOURCE_FB_MESSENGER, {'title' => 'KH liên hệ qua trang facebook của công ty'}],
+                                ['Facebook comment', SOURCE_FB_COMMENT, {'title' => 'KH để lại bình luận qua trang facebook của công ty'}]],
     'Hotline' => [['Hotline FB', SOURCE_HOTLINE_FB, {'title' => 'KH liên hệ qua Hotline FB của công ty'}],
                   ['Hotline SMS', SOURCE_HOTLINE_SMS, {'title' => 'KH liên hệ qua Hotline SMS của công ty'}]],
     'Tổng đài CSKH' => [['Telemarketing', SOURCE_TELEMARKETING, {'title' => 'KH liên hệ qua tổng đài CSKH của công ty hoặc do KH do bộ phận CSKH của Công ty khai thác'}]],
@@ -135,7 +236,8 @@ class Constant < ApplicationRecord
                                         ['Display', SOURCE_DISPLAY, {'title' => 'KH đến từ quảng cáo thông qua GDN'}]],
   }
   DEAL_SOURCES = {
-    SOURCE_FB => 'Facebook',
+    SOURCE_FB_MESSENGER => 'Facebook messenger',
+    SOURCE_FB_COMMENT => 'Facebook comment',
     SOURCE_HOTLINE_FB => 'Hotline FB',
     SOURCE_HOTLINE_SMS => 'Hotline SMS',
     SOURCE_TELEMARKETING => 'Telemarketing',

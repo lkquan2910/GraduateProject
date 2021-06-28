@@ -1,62 +1,54 @@
 # frozen_string_literal: true
 
 class Users::RegistrationsController < Devise::RegistrationsController
-  # before_action :configure_sign_up_params, only: [:create]
-  # before_action :configure_account_update_params, only: [:update]
+  layout 'application', :only => [:profile, :update_profile]
+  def profile
+  end
 
-  # GET /resource/sign_up
-  # def new
-  #   super
-  # end
+  def update_profile
+    respond_to do |format|
+      if current_user.update(profile_params)
+        bypass_sign_in(current_user)
+        format.html { redirect_to user_profile_path, notice: 'Tài khoản đã được chỉnh sửa thành công.' }
+        format.json { render :profile, status: :ok, location: current_user }
+      else
+        format.html { render :profile }
+        format.json { render json: current_user.errors, status: :unprocessable_entity }
+      end
+    end
+  end
 
-  # POST /resource
-  # def create
-  #   super
-  # end
+  def destroy_attachment
+    current_user.remove_avatar!
+    if current_user.valid?
+      current_user.save
+      current_user.reload
+      render json: {}
+    else
+      render json: { error: current_user.errors[params[:type].to_sym]&.first }
+    end
+  end
 
-  # GET /resource/edit
-  # def edit
-  #   super
-  # end
+  def subscribe
+    if params['subscribe'].to_s == 'false'
+      current_user.unsubscribe
+      return render body: nil
+    end
+    current_user.update(
+      auth_key: params[:subscription][:keys][:auth],
+      endpoint: params[:subscription][:endpoint],
+      p256dh_key: params[:subscription][:keys][:p256dh],
+      subscribe: true
+    )
+    session.delete(:refresh_subscribe)
+    render body: nil
+  end
 
-  # PUT /resource
-  # def update
-  #   super
-  # end
-
-  # DELETE /resource
-  # def destroy
-  #   super
-  # end
-
-  # GET /resource/cancel
-  # Forces the session data which is usually expired after sign
-  # in to be expired now. This is useful if the user wants to
-  # cancel oauth signing in/up in the middle of the process,
-  # removing all OAuth session data.
-  # def cancel
-  #   super
-  # end
-
-  # protected
-
-  # If you have extra params to permit, append them to the sanitizer.
-  # def configure_sign_up_params
-  #   devise_parameter_sanitizer.permit(:sign_up, keys: [:attribute])
-  # end
-
-  # If you have extra params to permit, append them to the sanitizer.
-  # def configure_account_update_params
-  #   devise_parameter_sanitizer.permit(:account_update, keys: [:attribute])
-  # end
-
-  # The path used after sign up.
-  # def after_sign_up_path_for(resource)
-  #   super(resource)
-  # end
-
-  # The path used after sign up for inactive accounts.
-  # def after_inactive_sign_up_path_for(resource)
-  #   super(resource)
-  # end
+  def profile_params
+    if params[:user][:password_confirmation].present?
+      params.fetch(:user, {}).permit(:full_name, :avatar, :password, :password_confirmation)
+    else
+      params.fetch(:user, {}).permit(:full_name, :avatar)
+    end
+  end
 end

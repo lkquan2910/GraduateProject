@@ -1,0 +1,70 @@
+.row
+  .col
+    = form_with model: [:admin, @role], local: true do |f|
+      .row.sticky-top.z1
+        .col
+          .card.mb-3
+            .card-body
+              .float-right
+                %button.btn.btn-danger.button-save= @role.new_record? ? 'Lưu' : 'Lưu thay đổi'
+      .card
+        .card-body
+          .row
+            .col-12
+              .card.shadow.mb-4
+                %a.d-block.card-header.py-3{"aria-controls" => "collapseCardExample", "aria-expanded" => "true", "data-toggle" => "collapse", :href => "#collapseCardExampleRole", :role => "button"}
+                  %h5.m-0.font-weight-bold.text-primary Thông tin chính
+                #collapseCardExampleRole.collapse.show
+                  .card-body
+                    .gp-field-group
+                      .gp-field-group-body
+                        .row
+                          .col
+                            .form-group
+                              = f.label :name, 'Tên'
+                              = f.text_field :name, class: 'form-control'
+                              - f.object.errors.messages[:name].each do |name_error|
+                                %span.invalid-feedback.custom-validation= name_error
+                        .row
+                          .col
+                            %table.table
+                              %thead
+                                %tr
+                                  %th(scope="col") Model Name
+                                  %th(scope="col") Can create
+                                  %th(scope="col") Can Edit
+                                  %th(scope="col") Can Edit Other
+                                  %th(scope="col") Can View
+                                  %th(scope="col") Can View Other
+                                  %th(scope="col") Can Delete
+                                  %th(scope="col") Can Delete Other
+                                  %th(scope="col") Can Import
+                                  %th(scope="col") Change state
+                              %tbody
+                                - Permission::LIST_MODEL_NAME.keys.sort.each do |m|
+                                  - p = @role.permissions.find_by_name(m)
+                                  - p = @role.permissions.build(name: m) unless p
+                                  = f.fields_for :permissions, p do |permission|
+                                    %tr
+                                      %td
+                                        = m
+                                        = permission.hidden_field :name, value: m
+                                      %td
+                                        = permission.check_box :can_create, class: 'gp-icheck', data: {skin: 'square', color: 'blue'}
+                                      %td
+                                        = permission.check_box :can_edit, class: 'gp-icheck', data: {skin: 'square', color: 'blue'}
+                                      %td
+                                        = permission.check_box :can_edit_other, class: 'gp-icheck', data: {skin: 'square', color: 'blue'}
+                                      %td
+                                        = permission.check_box :can_view, class: 'gp-icheck', data: {skin: 'square', color: 'blue'}
+                                      %td
+                                        = permission.check_box :can_view_other, class: 'gp-icheck', data: {skin: 'square', color: 'blue'}
+                                      %td
+                                        = permission.check_box :can_delete, class: 'gp-icheck', data: {skin: 'square', color: 'blue'}
+                                      %td
+                                        = permission.check_box :can_delete_other, class: 'gp-icheck', data: {skin: 'square', color: 'blue'}
+                                      %td
+                                        = permission.check_box :can_import, class: 'gp-icheck', data: {skin: 'square', color: 'blue'}
+                                      %td
+                                        = permission.check_box :change_state, class: 'gp-icheck', data: {skin: 'square', color: 'blue'}
+                        

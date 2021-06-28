@@ -16,11 +16,20 @@
 //= require bootstrap.bundle.min
 //= require jquery.easing.min
 //= require jquery.datetimepicker.full.min
+//= require bs-custom-file-input.min
 //= require sb-admin-2.min
 //= require initialize
 //= require custom
 //= require select2
+//= require icheck
+//= require fileinput.min
 //= require typeahead.bundle.min
+//= require theme.min
+//= require dropzone
 //= require cocoon
 //= require customer
+//= require project
+//= require product
+//= require icdo
+//= require user
 

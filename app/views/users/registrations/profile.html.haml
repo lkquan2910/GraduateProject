@@ -1,0 +1,88 @@
+- content_for :content_header do
+  .col-sm-6
+    %h2.m-0.text-dark Cá nhân
+  .col-sm-12.mt-2
+    %a.main-header--back{href: root_path}
+      %i.fas.fa-chevron-left
+        Trở lại trang chủ
+
+- content_for :content_body do
+  .row
+    .col
+      = form_with model: current_user, url: user_profile_path , local: true do |f|
+        .row.mb-3
+          .col
+            .card.gp-card
+              .card-body
+                .float-right
+                  %button.btn.btn-danger.button-save= current_user.new_record? ? 'Lưu' : 'Lưu thay đổi'
+        .row
+          .col-6
+            .card.gp-card
+              .card.shadow
+                %a.d-block.card-header.py-3{"aria-controls" => "collapseCardExampleProfile", "aria-expanded" => "true", "data-toggle" => "collapse", :href => "#collapseCardExampleProfile", :role => "button"}
+                  %h5.m-0.font-weight-bold.text-primary Thông tin cá nhân
+                #collapseCardExampleProfile.collapse.show
+                  .card-body
+                    .gp-field-group
+                      .gp-field-group-body
+                        .form-group
+                          = f.label :full_name, 'Tên'
+                          = f.text_field :full_name, class: 'form-control'
+                          - f.object.errors.messages[:full_name].each do |full_name_error|
+                            %span.invalid-feedback.custom-validation= full_name_error
+                        .form-group
+                          = f.label :email, 'Email'
+                          = f.email_field :email, class: 'form-control', disabled: ''
+                        .form-group
+                          = f.label :password, 'Mật khẩu'
+                          = f.password_field :password, class: 'form-control'
+                          - f.object.errors.messages[:password].each do |password_error|
+                            %span.invalid-feedback.custom-validation= password_error
+                        .form-group
+                          = f.label :password_confirmation, 'Xác nhận mật khẩu'
+                          = f.password_field :password_confirmation, class: 'form-control'
+                          - f.object.errors.messages[:password_confirmation].each do |password_confirmation_error|
+                            %span.invalid-feedback.custom-validation= password_confirmation_error
+                        -#.form-group
+                        -#  %a{:href => user_google_oauth2_omniauth_authorize_path, style: 'color: black;', :class => "popup", :"data-width" => 800, :"data-height" => 800, 'data-no-turbolinks': true}
+                        -#    %input.gp-icheck.connect-with-google{type: 'checkbox', data: {skin: 'square', color: 'blue'}, checked: current_user.access_token}
+                        -#    %span.ml-1 Đồng bộ với Google Calendar
+
+                        .form-group
+                          .custom-control.custom-switch
+                            %input#subscribe-message.custom-control-input{:type => "checkbox", subscribe: current_user.subscribe.to_s}/
+                            %label.custom-control-label{:for => "subscribe-message"} Bật thông báo trình duyệt
+
+                        -#- if current_user.super_admin? || current_user.bi_ba? || current_user.full_name.strip == 'Sale Member'
+                        -#  .form-group
+                        -#    %a{href: "https://www.facebook.com/v9.0/dialog/oauth?client_id=#{ENV['FACEBOOK_APP_ID']}&scope=#{Constant::FB_SCOPE}&redirect_uri=#{admin_facebook_callback_url}", style: 'color: black;', :class => "popup", :"data-width" => 800, :"data-height" => 800, 'data-no-turbolinks': true}
+                        -#      %input.gp-icheck.connect-with-google{type: 'checkbox', data: {skin: 'square', color: 'blue'}, checked: current_user.access_token}
+                        -#      %span.ml-1 Đồng bộ với Facebook
+
+                        .form-group
+                          = f.label :account_type, 'Loại tài khoản'
+                          = f.select :account_type, options_for_select(User.account_types.keys.map { |w| [w.humanize, w] }, current_user.account_type), {include_blank: true}, { class: 'gp-select2 form-control', disabled: '' }
+                        - if current_user.internal? || current_user.agent?
+                          .form-group
+                            = f.label :role_id, 'Phân quyền'
+                            = f.select :role_id, options_for_select(Role.all.map { |w| [w.name.humanize, w.id] }, current_user.role_id), {include_blank: true}, { class: 'gp-select2 form-control', disabled: '' }
+          -#
+          -#.col-6
+          -#  .card.gp-card
+          -#    .card-header
+          -#      %h3.card-title Avatar
+          -#      .card-tools
+          -#        %button.btn.btn-tool{type: 'button', data: {card_widget: 'collapse'}}
+          -#          %i.fas.fa-minus
+          -#    .card-body
+          -#      .gp-field-group
+          -#        .gp-field-group-body
+          -#          - if current_user.avatar.present?
+          -#            = hidden_field :user, :avatar, value: current_user.avatar.identifier, 'data-url': current_user.avatar.url, 'data-delete-url': user_destroy_attachment_path
+          -#          .row
+          -#            .col
+          -#              .file-loading
+          -#                = f.file_field :avatar, id: 'user-avatar-input', 'data-browse-on-zone-click': true, 'data-show-upload': false, 'data-show-caption': true, 'data-msg-placeholder': 'Chọn file', disabled: @is_disabled
+          -#                - f.object.errors.messages[:avatar].each do |avatar_error|
+          -#                  %span.invalid-feedback.custom-validation= avatar_error

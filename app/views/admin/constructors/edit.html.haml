@@ -1,0 +1,10 @@
+- content_for :content_header do
+  .col-sm-6
+    %h2.text-gray-800 Chỉnh sửa Chủ tổng thầu
+  .col-sm-12.mt-2
+    %a.main-header--back{href: admin_constructors_path}
+      %i.fas.fa-chevron-left
+        Trở lại danh sách
+
+- content_for :content_body do
+  = render 'form'

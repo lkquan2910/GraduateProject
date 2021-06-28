@@ -1,0 +1,50 @@
+- content_for :content_header do
+  .d-sm-flex.justify-content-between.mb-4
+    .col-sm-6
+      %h1.h3.mb-0.text-gray-800 Danh sách người dùng
+
+- content_for :content_body do
+  .row
+    .col
+      .card
+        .card-body
+          = form_with url: admin_users_path, method: :get, local: true, class: 'mr-auto my-2 my-md-0 mw-100 navbar-search' do |f|
+            .input-group
+              = f.text_field :query, value: params[:query], id: 'user-search', class: 'form-control typeahead bg-light border-0 small', type: 'search', placeholder: 'Nhập từ khoá tìm kiếm theo: Tên, Email'
+              .input-group-append
+                %button.btn.btn-primary{:type => "submit"}
+                  %i.fas.fa-search.fa-sm
+  .card
+    .card-body
+      .table-responsive.p-0
+        %table.table.text-nowrap.table-hover
+          %thead
+            %tr
+              %th Tên
+              %th Email
+              %th Loại tài khoản
+              %th Quyền
+              %th Trạng thái
+              %th
+          %tbody
+            - @users.each do |user|
+              %tr
+                %td.align-middle= user.full_name if user.full_name.present?
+                %td.align-middle= user.email
+                %td.align-middle= user.account_type
+                %td.align-middle= user.role.name if user.role.present?
+                %td.align-middle= user.status
+                %td.align-middle.text-right
+                  %a.btn.btn-outline-primary{href: admin_user_path(user.id)}
+                    %i.far.fa-eye
+                  %a.btn.btn-outline-primary.btn-edit{href: edit_admin_user_path(user.id)}
+                    %i.fas.fa-pencil-alt
+                  - if policy(user).destroy?
+                    %a.btn.btn-outline-primary{href: admin_user_path(user.id), data: {method: 'delete', confirm: 'Bạn chắc chắn muốn xóa bản ghi này?'}}
+                      %i.fas.fa-trash
+
+- content_for :content_footer do
+  %footer.main-footer.main-footer-fixed
+    .row
+      .col-12
+        = link_to 'Tạo mới', new_admin_user_path, class: 'btn btn-primary'

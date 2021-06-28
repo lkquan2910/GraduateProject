@@ -1,0 +1,5 @@
+= form_with url: import_admin_project_products_path, html: {id: "import-product-form"}, local: true do |f|
+  #files-field.dropzone.fallback
+  .form-group.input-group.btn-zone.mt-3
+    = f.submit 'Import', class: 'btn btn-gp-import', style: 'padding-left: 2.5rem !important'
+    %i.fas.fa-cloud-upload-alt.mr-1{style: 'color: white; position: absolute; top: 27%; left: 4%'}

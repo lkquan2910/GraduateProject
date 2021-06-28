@@ -1,0 +1,68 @@
+.row
+  .col
+    = form_with model: [:admin, @project, @product], local: true, class: 'col form-has-currency', id: 'edit-product' do |f|
+      %input.d-none{name: 'confirm'}
+      .row.sticky-top
+        .col
+          .card.gp-card
+            .card-body
+              .gp-field-group
+                .gp-field-group-header
+                  %span Trạng thái
+                .gp-field-group-body
+                  .form-group
+                    .row
+                      .col-8
+                        = f.radio_button :state, @product.aasm.current_state, class: 'gp-icheck', data: {skin: 'square', color: 'blue'}, disabled: @state_is_disable
+                        = f.label :state, I18n.t("product.states.#{@product.aasm.current_state}"), class: 'margin-right-5'
+                        = f.hidden_field :stored_state, value: @stored_state
+                        - if @deposits
+                          - @deposits.each do |deposit|
+                            = f.hidden_field :existing_deposit, 'data-name': deposit[0], 'data-url': deposit[1]
+                        - f.object.next_states.each do |state|
+                          = f.radio_button :state, state, class: 'gp-icheck', data: {skin: 'square', color: 'blue'}, disabled: @state_is_disable
+                          = f.label :state, I18n.t("product.states.#{state}"), class: 'margin-right-5'
+                        - f.object.errors.messages[:state].each do |error|
+                          %span.invalid-feedback.custom-validation= error
+                      .col-4
+                        - unless @is_disabled && @state_is_disable
+                          .float-right
+                            %button#product-submit.btn.btn-danger.button-save{type: 'button'}= @product.new_record? ? 'Lưu' : 'Lưu thay đổi'
+
+      - if @product&.level == 0
+        = render 'high_form', f: f
+      - else
+        = render 'low_form', f: f
+
+- content_for :js do
+  - if @show_confirm
+    - list_deal = ''
+    - @product.deals.where.not(state: 'canceled').each do |d|
+      - list_deal += "giao dịch <strong>#{d.name}</strong> của NVKD <strong>#{d.assignee&.full_name}</strong> sẽ bị xóa"
+    :javascript
+      function swal_confirm_product_recall() {
+        html = "Chuyển đổi trạng thái sản phẩm sang <strong>#{I18n.t("product.states.#{@product.state}")}</strong> đồng nghĩa sản phẩm trong #{list_deal.html_safe}";
+        swalWithBootstrapButtons.fire({
+          title: 'Xác nhận cập nhật trạng thái',
+          html: html,
+          showConfirmButton: true,
+          showCancelButton: true,
+          cancelButtonText: 'Hủy',
+          confirmButtonText: 'OK',
+          showCloseButton: true,
+          allowOutsideClick: false,
+          focusConfirm: true,
+          showClass: {
+            popup: 'swal2-modal-custom',
+          }
+        }).then((result) => {
+          if (result.isConfirmed) {
+            $('[name="confirm"]').val('true');
+          } else {
+            // reload page
+            $('[name="confirm"]').val('false');
+          }
+          $('#product-submit').click();
+        })
+      }
+      swal_confirm_product_recall();

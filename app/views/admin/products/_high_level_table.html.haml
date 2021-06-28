@@ -1,0 +1,42 @@
+.table-responsive.p-0
+  %table.table.text-nowrap.table-hover
+    %thead
+      %tr
+        %th.first-col-stick Ảnh sản phẩm
+        %th.second-col-stick Mã sản phẩm
+        %th Phân khu
+        %th Tòa
+        %th Mã căn/Sàn
+        %th Loại hình
+        %th Loại sản phẩm
+        %th Hướng ban công
+        %th Đơn giá
+        %th Diện tích thông thủy(m2)
+        %th Tổng GT
+        %th Trạng thái
+        %th.last-col-stick
+    %tbody
+      - @high_products.each do |product|
+        %tr
+          -if product.images.present?
+            %td.align-middle.first-col-stick= image_tag(product.images.first.url, class: 'img-thumbnail', style: 'width: 100px') if product.images.first.present?
+          %td.align-middle.second-col-stick= product.code
+          %td.align-middle= product.subdivision&.name
+          %td.align-middle= product.block&.name
+          %td.align-middle= product.name
+          %td.align-middle= Constant::PRODUCT_REAL_ESTATE_TYPES[product.level][product.real_estate_type]
+          %td.align-middle= product.product_type
+          %td.align-middle= Constant::PRODUCT_DIRECTIONS[product.direction]
+          %td.align-middle= currency(product.price)
+          %td.align-middle= acreage(product.carpet_area)
+          %td.align-middle= currency(product.sum_price)
+          %td.align-middle= product.get_state
+          %td.align-middle.text-right.last-col-stick
+            %a.btn.btn-outline-primary.btn-edit{href: edit_admin_project_product_path(@project, product.id)}
+              %i.fas.fa-pencil-alt
+            - if policy(product).destroy?
+              %a.btn.btn-outline-primary{href: admin_project_product_path(@project, product.id), data: {method: 'delete', confirm: 'Bạn chắc chắn muốn xóa bản ghi này?'}}
+                %i.fas.fa-trash
+      .row
+        .col-6
+          = render partial: 'shared/pagination', locals: { pagy: @high_pagy }

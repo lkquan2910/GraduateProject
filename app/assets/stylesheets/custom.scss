@@ -1,12 +1,33 @@
+$primary-color: #4e73df;
+
 #page-top {
   background-color: #f8f9fc;
+}
+
+.gp-field-group {
+  margin-bottom: 16px;
+
+  .gp-field-group-header {
+    color: $primary-color;
+    margin-bottom: 10px;
+    font-size: 20px;
+  }
+}
+
+.form-control:disabled, .form-control[readonly] {
+  background: #eeeeee !important;
+}
+
+.bg-gp-primary {
+  background-color: #fff;
+  border-color: $primary-color;
 }
 
 .btn-gp-import {
   color: white;
   background-color: #FC6103;
   float: right !important;
-  width: 24%;
+  width: 13%;
 }
 
 .btn-gp-import:hover {
@@ -38,9 +59,10 @@ body:not(.sidebar-toggled) {
   }
 }
 
-#content-wrapper {
+#wrapper #content-wrapper {
+  overflow-x: visible !important;
   margin-left: 104px;
-}
+  }
 
 .table-hover tbody tr {
   cursor: pointer;
@@ -54,8 +76,12 @@ body:not(.sidebar-toggled) {
   justify-content: center
 }
 
-.z9999 {
-  z-index: 9999;
+.z1 {
+  z-index: 100 !important;
+}
+
+.select2-container {
+  width: 100% !important;
 }
 
 .select2-container--bootstrap .select2-selection--single {
@@ -67,6 +93,10 @@ body:not(.sidebar-toggled) {
   background-color: #728aed;
 }
 
+.select2-container--bootstrap .select2-selection--multiple {
+  height: 38px !important;
+}
+
 .header-back {
   font-size: 20px;
 }
@@ -74,6 +104,7 @@ body:not(.sidebar-toggled) {
 .flash-notice {
   background: honeydew;
   border-color: #e3e6f0;
+
   .icon-successful {
     color: #1cc88a;
   }
@@ -82,6 +113,7 @@ body:not(.sidebar-toggled) {
 .flash-alert {
   background: lavenderblush;
   border-color: #e3e6f0;
+
   .icon-error {
     color: #dc3545;
   }
@@ -92,26 +124,61 @@ body:not(.sidebar-toggled) {
   display: block;
 }
 
+.file-drag-handle.drag-handle-init.text-info {
+  color: $primary-color !important;
+}
+
+// index project stick column
+.first-col-stick {
+  position: sticky;
+  left: 0px;
+  background-color: white;
+  width: 100px;
+}
+
+.second-col-stick {
+  position: sticky;
+  background-color: white;
+}
+
+.last-col-stick {
+  position: sticky;
+  background-color: white;
+  right: 0px;
+}
+
+.table-hover {
+  tbody {
+    tr {
+      cursor: pointer;
+    }
+  }
+}
+
 /* Custom datepicker */
 .ui-widget.ui-widget-content {
-    border-color: #66afe9;
+  border-color: #66afe9;
   box-shadow: 0 6px 12px rgba(0, 0, 0, 0.175);
 }
 
 .ui-datepicker {
   width: 20em;
   padding: 10px 15px;
+
   .ui-widget-header {
     border: none;
     background: none;
+
     .ui-icon {
       background: none;
     }
   }
+
   .ui-datepicker-prev, .ui-datepicker-next {
     border: 1px solid #2E384D;
     cursor: pointer;
   }
+
   .ui-datepicker-prev span, .ui-datepicker-next span {
     border-color: inherit !important;
     width: 6px;
@@ -122,51 +189,62 @@ body:not(.sidebar-toggled) {
     top: 18px;
     position: absolute;
   }
+
   .ui-datepicker-prev span {
     left: 20px;
     transform: rotate(225deg);
   }
+
   .ui-datepicker-next span {
     left: 16px;
     transform: rotate(45deg);
   }
+
   .ui-state-hover {
     border: 1px solid #2E384D;
     background: none;
     color: #2E384D;
   }
+
   .ui-datepicker-prev-hover span, .ui-datepicker-next-hover span {
     border-color: #3F3356 !important;
   }
+
   table.ui-datepicker-calendar {
     thead {
       border-bottom: 1px dashed #ECEBED;
+
       th {
         padding-bottom: 3px;
       }
     }
+
     tbody:before {
       content: ".";
       display: block;
       line-height: 10px;
       text-indent: -99999px;
     }
+
     td span, td a {
       padding: 0.8em;
       text-align: center;
     }
+
     .ui-state-default {
       border: none;
       background: none;
       font-weight: bold;
-      color: #4e73df;
+      color: $primary-color;
     }
+
     .ui-state-active {
       background-image: linear-gradient(180deg, #4e73df 10%, #224abe 100%);
       border-radius: 50%;
       line-height: 14px;
       color: #FFFFFF;
     }
+
     .ui-state-highlight {
       border: 1px solid rgba(12, 119, 198, 0.1);
       background-color: rgba(12, 119, 198, 0.1);
@@ -174,6 +252,7 @@ body:not(.sidebar-toggled) {
       line-height: 14px;
       color: #0C77C6
     }
+
     .ui-datepicker-week-end a {
       color: #e74a3b;
     }
@@ -185,7 +264,8 @@ body:not(.sidebar-toggled) {
   background: #fff;
   border-top: 1px solid #dee2e6;
   color: #869099;
-  padding: 1rem
+  padding: 1rem;
+  z-index: 99;
 }
 
 .main-footer-fixed {
@@ -194,7 +274,6 @@ body:not(.sidebar-toggled) {
   bottom: 0;
   width: calc(100%);
   background-color: white;
-  z-index: 10;
 
   .btn {
     float: right !important;
